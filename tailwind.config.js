@@ -28,7 +28,6 @@ module.exports = {
         // Gradient Dark = purple300 -> gray900
         // Gradient Light = gray300 -> purple300
       },
-
       fontSize: {
         title1: ['2.375rem', { fontWeight: 'light' }],
         title2: ['1.875rem', { fontWeight: 'light' }],
@@ -36,6 +35,16 @@ module.exports = {
         subtitle: ['1rem', { fontWeight: 'medium ' }],
         body: ['0.875rem', { fontWeight: 'regular' }],
         button: ['1rem', { fontWeight: 'medium' }],
+      },
+      fontWeight: {
+        thin: '100',
+        light: '300',
+        medium: '500',
+        bold: '700',
+      },
+      fontFamily: {
+        worksans: 'Work Sans, sans-serif',
+        kanit: 'Kanit, sans-serif',
       },
     },
   },
