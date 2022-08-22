@@ -4,17 +4,17 @@ import { ThirdwebProvider, ChainId } from '@thirdweb-dev/react'
 import SonicaBaseLayout from '../layouts/SonicaBaseLayout'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const chains = [
-    ChainId.Fantom,
-    ChainId.Goerli,
-    ChainId.Avalanche,
-    ChainId.Mumbai,
-    ChainId.Polygon,
-    ChainId.Mainnet,
-  ]
+  // const chains = [
+  //   ChainId.Fantom,
+  //   ChainId.Goerli,
+  //   ChainId.Avalanche,
+  //   ChainId.Mumbai,
+  //   ChainId.Polygon,
+  //   ChainId.Mainnet,
+  // ]
 
   return (
-    <ThirdwebProvider desiredChainId={chains}>
+    <ThirdwebProvider desiredChainId={ChainId.Goerli}>
       <SonicaBaseLayout>
         <Component {...pageProps} />
       </SonicaBaseLayout>

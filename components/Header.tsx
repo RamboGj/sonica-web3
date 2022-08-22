@@ -26,12 +26,12 @@ export default function Header() {
   }, [address])
 
   return (
-    <div className="w-screen bg-bgPink h-24">
+    <div className="w-screen bg-purple300 h-24">
       <div className="flex max-w-[1060px] justify-between items-center mx-auto h-full">
         <h1 className="text-white text-[40px] font-bold">Web 3.0</h1>
         <button
           onClick={handleConnectWithMetamask}
-          className="flex rounded-full text-md bg-white text-bgPink font-bold py-2 px-3 items-center justify-center hover:bg-gray-300 transition duration-500 gap-2 w-48"
+          className="flex rounded-full text-md bg-white text-purple300 font-bold py-2 px-3 items-center justify-center hover:bg-gray-300 transition duration-500 gap-2 w-48"
         >
           {isAuthenticating ? (
             <CircleNotch size={24} className="animate-spin" />

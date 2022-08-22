@@ -29,7 +29,7 @@ export default function Home() {
 
   if (!address) {
     return (
-      <div className="max-w-screen w-full h-screen bg-gradient-to-b from-bgPink to-black overflow-hidden">
+      <div className="max-w-screen w-full h-screen bg-gradient-to-b from-purple300 to-black overflow-hidden">
         <div className="max-w-[1060px] mx-auto flex justify-between items-center pt-24">
           <div className="max-w-[420px] leading-none space-y-8">
             <h1 className="text-white font-bold text-[60px]">
@@ -40,7 +40,7 @@ export default function Home() {
             </p>
             <button
               onClick={handleConnectWithMetamask}
-              className="flex rounded-full text-md bg-white text-bgPink font-bold py-2 px-3 items-center justify-center hover:bg-gray-300 transition duration-500 gap-2 w-48"
+              className="flex rounded-full text-md bg-white text-purple300 font-bold py-2 px-3 items-center justify-center hover:bg-gray-300 transition duration-500 gap-2 w-48"
             >
               {isAuthenticating ? (
                 <CircleNotch size={24} className="animate-spin" />
