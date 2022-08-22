@@ -1,6 +1,6 @@
 import { useAddress, useMetamask } from '@thirdweb-dev/react'
 import { CircleNotch, Wallet } from 'phosphor-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function Header() {
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false)
@@ -8,22 +8,11 @@ export default function Header() {
 
   const connectWithMetamask = useMetamask()
 
-  function handleConnectWithMetamask() {
-    connectWithMetamask()
+  async function handleConnectWithMetamask() {
     setIsAuthenticating(true)
+    await connectWithMetamask()
+    setIsAuthenticating(false)
   }
-
-  async function verifyIfIsConnected() {
-    if (address) {
-      setIsAuthenticating(false)
-    } else {
-      console.log('Autenticando')
-    }
-  }
-
-  useEffect(() => {
-    verifyIfIsConnected()
-  }, [address])
 
   return (
     <div className="w-screen bg-purple300 h-24 px-12">
@@ -32,6 +21,7 @@ export default function Header() {
           Web 3.0
         </h1>
         <button
+          disabled={!!address}
           onClick={handleConnectWithMetamask}
           className="hidden md:flex rounded-full text-md bg-white text-purple300 font-bold py-2 px-3 items-center justify-center hover:bg-gray-300 transition duration-500 gap-2 w-48"
         >

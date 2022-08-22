@@ -1,6 +1,6 @@
 import { useAddress, useMetamask } from '@thirdweb-dev/react'
 import { CircleNotch, Wallet } from 'phosphor-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import scPhoto from '../assets/scphoto.png'
 
 export default function Home() {
@@ -10,22 +10,11 @@ export default function Home() {
 
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false)
 
-  function handleConnectWithMetamask() {
-    connectWithMetamask()
+  async function handleConnectWithMetamask() {
     setIsAuthenticating(true)
+    await connectWithMetamask()
+    setIsAuthenticating(false)
   }
-
-  async function verifyIfIsConnected() {
-    if (address) {
-      setIsAuthenticating(false)
-    } else {
-      console.log('Autenticando')
-    }
-  }
-
-  useEffect(() => {
-    verifyIfIsConnected()
-  }, [address])
 
   if (!address) {
     return (
