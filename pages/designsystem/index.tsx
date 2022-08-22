@@ -19,8 +19,10 @@ export default function DesignSystem() {
 
       <div className="mx-auto mt-32">
         <h1>05. FORMS</h1>
-        <FormInput />
-        <FormDropdow />
+        <FormInput label="Digite" placeholder="digite..." error />
+        <div className="mt-12">
+          <FormDropdow />
+        </div>
       </div>
     </div>
   )
