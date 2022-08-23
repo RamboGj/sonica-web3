@@ -7,7 +7,7 @@ export default function Home() {
 
   if (!address) {
     return (
-      <div className="max-w-screen w-full h-screen bg-gradient-to-b from-purple300 to-black overflow-hidden px-12">
+      <div className="w-screen overscroll-x-none h-screen bg-gradient-to-b from-purple300 to-black px-12">
         <div className="max-w-[1060px] mx-auto flex justify-between items-center pt-24">
           <div className="max-w-[420px] leading-none space-y-8">
             <h1 className="text-white font-bold text-[60px]">

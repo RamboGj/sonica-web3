@@ -7,7 +7,9 @@ export default function Header() {
         <h1 className="text-white mx-auto md:mx-0 text-[40px] font-bold">
           Web 3.0
         </h1>
-        <WalletConnector />
+        <div className="hidden md:flex">
+          <WalletConnector />
+        </div>
       </div>
     </div>
   )
