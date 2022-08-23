@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { ArrowDown, CaretDown } from 'phosphor-react'
 
-export default function Example() {
+export default function FormDropdown() {
   return (
     <div className="max-w-[280px] h-[46px] bg-white rounded-md border border-gray-300">
       <Menu as="div" className="w-full max-w-[280px] h-[-46px]">

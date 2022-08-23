@@ -1,9 +1,10 @@
 interface ButtonProps {
   type?: 'danger' | 'attention' | 'success' | 'continue' | 'ghost'
   disabled?: boolean
+  label?: string
 }
 
-export default function Button({ type, disabled }: ButtonProps) {
+export default function Button({ type, disabled, label }: ButtonProps) {
   const styles = {
     default: 'bg-purple100 hover:bg-purple300',
     danger: 'bg-danger hover:opacity-75',
@@ -20,7 +21,7 @@ export default function Button({ type, disabled }: ButtonProps) {
         disabled={disabled}
         className={`${styles.ghost} w-[135px] rounded-md py-[12px] h-12 font-medium disabled:bg-gray300 disabled:text-gray500 transition duration-500 shadow-xl`}
       >
-        Button
+        {label || 'Button'}
       </button>
     )
   } else {
@@ -39,7 +40,7 @@ export default function Button({ type, disabled }: ButtonProps) {
             : `${styles.default}`
         } w-[135px] rounded-md py-3 h-12 text-white text-button disabled:bg-gray300 disabled:text-gray500 transition duration-500 shadow-xl`}
       >
-        Button
+        {label || 'Button'}
       </button>
     )
   }

@@ -1,13 +1,14 @@
-// import Button from '../../components/Button'
-// import FormDropdow from '../../components/Form/FormDropwdown'
-// import FormInput from '../../components/Form/FormInput'
 import logoSonica from '../../assets/logo-sonica.svg'
 import Image from 'next/image'
+import Button from '../../components/Button'
+import FormInput from '../../components/Form/FormInput'
+import FormDropdown from '../../components/Form/FormDropwdown'
+import { CaretDown, CaretRight, RocketLaunch, Wallet, X } from 'phosphor-react'
 
 export default function DesignSystem() {
   return (
-    <div className="max-w-screen">
-      <header className="flex px-12 md:px-48 justify-center md:justify-between items-center h-[200px] bg-white">
+    <div className="max-w-screen overflow-scroll overscroll-x-auto">
+      <header className="flex px-12 md:px-48 justify-center md:justify-between items-center h-[150px] bg-white">
         <Image src={logoSonica} width={300} height={150} alt="Logo da Sonica" />
 
         <div className="text-right space-y-2 hidden md:block">
@@ -18,118 +19,121 @@ export default function DesignSystem() {
           </div>
         </div>
       </header>
-      <main className="w-full px-12 md:px-48 justify-center md:justify-between bg-gray300 max-h-fit">
-        <div className="flex flex-wrap justify-between py-24 space-y-12 md:space-y-0">
-          <div className="col-span-1 max-w-[350px] w-full">
-            <h1 className="text-[40px] text-gray500">01 TYPEFACE</h1>
-            <div className="w-full p-[2px] bg-gray500 rounded-full"></div>
+      <main className="w-full px-12 md:px-48 bg-gray300 max-h-fit space-y-12 flex justify-center md:block">
+        <div className="py-24 space-y-12 md:space-y-0 flex flex-wrap justify-between">
+          <div className="flex-col space-y-8">
+            <div className="max-w-[350px] h-fit">
+              <h1 className="text-[40px] text-gray500">01 TYPEFACE</h1>
+              <div className="w-full p-[2px] bg-gray500 rounded-full"></div>
 
-            <div className="mt-12 space-y-16">
-              <div className="font-kanit">
-                <h1 className="text-title">Title: Kanit</h1>
-                <ul className="flex space-x-12">
-                  <li className="flex flex-col font-thin">
-                    <p className="text-[60px]">Aa</p>
-                    <p>Thin</p>
-                  </li>
-                  <li className="flex flex-col font-light">
-                    <p className="text-[60px]">Aa</p>
-                    <p>Light</p>
-                  </li>
-                  <li className="flex flex-col font-medium">
-                    <p className="text-[60px]">Aa</p>
-                    <p>Medium</p>
-                  </li>
-                  <li className="flex flex-col font-bold">
-                    <p className="text-[60px]">Aa</p>
-                    <p>Bold</p>
-                  </li>
-                </ul>
+              <div className="mt-12 space-y-16">
+                <div className="font-kanit">
+                  <h1 className="text-title">Title: Kanit</h1>
+                  <ul className="flex gap-x-12 flex-wrap">
+                    <li className="flex flex-col font-thin">
+                      <p className="text-[60px]">Aa</p>
+                      <p>Thin</p>
+                    </li>
+                    <li className="flex flex-col font-light">
+                      <p className="text-[60px]">Aa</p>
+                      <p>Light</p>
+                    </li>
+                    <li className="flex flex-col font-medium">
+                      <p className="text-[60px]">Aa</p>
+                      <p>Medium</p>
+                    </li>
+                    <li className="flex flex-col font-bold">
+                      <p className="text-[60px]">Aa</p>
+                      <p>Bold</p>
+                    </li>
+                  </ul>
+                </div>
+                <div className="font-worksans">
+                  <p className="text-md">Body: Work Sans</p>
+                  <ul className="flex gap-x-12 flex-wrap">
+                    <li className="flex flex-col font-thin">
+                      <p className="text-[60px]">Aa</p>
+                      <p>Thin</p>
+                    </li>
+                    <li className="flex flex-col font-light">
+                      <p className="text-[60px]">Aa</p>
+                      <p>Light</p>
+                    </li>
+                    <li className="flex flex-col font-medium">
+                      <p className="text-[60px]">Aa</p>
+                      <p>Medium</p>
+                    </li>
+                    <li className="flex flex-col font-bold">
+                      <p className="text-[60px]">Aa</p>
+                      <p>Bold</p>
+                    </li>
+                  </ul>
+                </div>
+                <div className="flex flex-col space-y-4 font-kanit text-gray500">
+                  <p className="font-light text-[38px]">
+                    Title 1 / Kanit Light / 38px
+                  </p>
+                  <p className="font-light text-[30px]">
+                    Title2 / Kanit Light / 30px
+                  </p>
+                  <p className="font-medium text-[20px]">
+                    Title3 / Kanit Medium / 20px
+                  </p>
+                  <p className="font-medium text-[16px]">
+                    Subtitle / Kanit Medium / 16px
+                  </p>
+                  <p className="font-worksans font-regular text-[14px]">
+                    Body / Work Sans / 14px
+                  </p>
+                  <p className="font-worksans font-regular text-[16px]">
+                    Button / Work Sans Medium / 16px
+                  </p>
+                </div>
               </div>
-              <div className="font-worksans">
-                <p className="text-md">Body: Work Sans</p>
-                <ul className="flex space-x-12">
-                  <li className="flex flex-col font-thin">
-                    <p className="text-[60px]">Aa</p>
-                    <p>Thin</p>
-                  </li>
-                  <li className="flex flex-col font-light">
-                    <p className="text-[60px]">Aa</p>
-                    <p>Light</p>
-                  </li>
-                  <li className="flex flex-col font-medium">
-                    <p className="text-[60px]">Aa</p>
-                    <p>Medium</p>
-                  </li>
-                  <li className="flex flex-col font-bold">
-                    <p className="text-[60px]">Aa</p>
-                    <p>Bold</p>
-                  </li>
-                </ul>
-              </div>
-              <div className="flex flex-col space-y-4 font-kanit text-gray500">
-                <p className="font-light text-[38px]">
-                  Title 1 / Kanit Light / 38px
-                </p>
-                <p className="font-light text-[30px]">
-                  Title2 / Kanit Light / 30px
-                </p>
-                <p className="font-medium text-[20px]">
-                  Title3 / Kanit Medium / 20px
-                </p>
-                <p className="font-medium text-[16px]">
-                  Subtitle / Kanit Medium / 16px
-                </p>
-                <p className="font-worksans font-regular text-[14px]">
-                  Body / Work Sans / 14px
-                </p>
-                <p className="font-worksans font-regular text-[16px]">
-                  Button / Work Sans Medium / 16px
-                </p>
+            </div>
+            <div className="w-[350px]">
+              <h1 className="text-[40px] text-gray500">02 PARAGRAPH</h1>
+              <div className="w-full p-[2px] bg-gray500 rounded-full"></div>
+
+              <div className="mt-12 space-y-16">
+                <article className="space-y-10">
+                  <div>
+                    <h1 className="font-kanit text-title1 font-light text-gray500">
+                      Lorem ipsum dolor
+                    </h1>
+                    <p className="mt-6 text-body text-gray500">
+                      Nam vestibulum turpis a diam molestie, in fringilla sapien
+                      placerat. Vestibulum vitae dui ullamcorper, vehicula lacus
+                      id, ullamcorper purus. Curabitur quis risus vitae metus
+                      dictum viverra non a massa. Nullam cursus, tellus vitae
+                      luctus accumsan, felis sem ultricies tortor, sit amet
+                      tincidunt est erat et dui.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-kanit text-title3 text-gray500">
+                      Lorem ipsum dolor
+                    </h3>
+                    <p className="mt-3 text-body text-gray500">
+                      Nam vestibulum turpis a diam molestie, in fringilla sapien
+                      placerat. Vestibulum vitae dui ullamcorper, vehicula lacus
+                      id, ullamcorper purus. Curabitur quis risus vitae metus
+                      dictum viverra non a massa. Nullam cursus, tellus vitae
+                      luctus accumsan, felis sem ultricies tortor, sit amet
+                      tincidunt est erat et dui.
+                    </p>
+                  </div>
+                </article>
               </div>
             </div>
           </div>
-          <div className="col-span-1 w-[350px]">
-            <h1 className="text-[40px] text-gray500">02 PARAGRAPH</h1>
-            <div className="w-full p-[2px] bg-gray500 rounded-full"></div>
 
-            <div className="mt-12 space-y-16">
-              <article className="space-y-10">
-                <div>
-                  <h1 className="font-kanit text-title1 font-light text-gray500">
-                    Lorem ipsum dolor
-                  </h1>
-                  <p className="mt-6 text-body text-gray500">
-                    Nam vestibulum turpis a diam molestie, in fringilla sapien
-                    placerat. Vestibulum vitae dui ullamcorper, vehicula lacus
-                    id, ullamcorper purus. Curabitur quis risus vitae metus
-                    dictum viverra non a massa. Nullam cursus, tellus vitae
-                    luctus accumsan, felis sem ultricies tortor, sit amet
-                    tincidunt est erat et dui.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="font-kanit text-title3 text-gray500">
-                    Lorem ipsum dolor
-                  </h3>
-                  <p className="mt-3 text-body text-gray500">
-                    Nam vestibulum turpis a diam molestie, in fringilla sapien
-                    placerat. Vestibulum vitae dui ullamcorper, vehicula lacus
-                    id, ullamcorper purus. Curabitur quis risus vitae metus
-                    dictum viverra non a massa. Nullam cursus, tellus vitae
-                    luctus accumsan, felis sem ultricies tortor, sit amet
-                    tincidunt est erat et dui.
-                  </p>
-                </div>
-              </article>
-            </div>
-          </div>
-          <div className="col-span-1 w-[350px]">
+          <div className="w-[350px] h-fit">
             <h1 className="text-[40px] text-gray500">03 COLOR PALLETE</h1>
             <div className="w-full p-[2px] bg-gray500 rounded-full"></div>
 
-            <div className="space-y-8 text-gray500">
+            <div className="space-y-12 text-gray500">
               <h1 className="text-title3 text-gray900 mt-10 mb-4">
                 Primary Colors
               </h1>
@@ -233,30 +237,81 @@ export default function DesignSystem() {
               </div>
             </div>
           </div>
+          <div className="flex-col space-y-12">
+            <div className="w-[350px] h-fit">
+              <h1 className="text-[40px] text-gray500">04 BUTTONS</h1>
+              <div className="w-full p-[2px] bg-gray500 rounded-full"></div>
+
+              <div className="mt-12 flex gap-5 flex-wrap">
+                <Button />
+                <Button disabled label="Disabled" />
+                <Button type="ghost" label="Ghost" />
+                <Button type="danger" label="Danger" />
+                <Button type="attention" label="Attention" />
+                <Button type="success" label="Success" />
+                <Button type="continue" label="Continue" />
+              </div>
+            </div>
+            <div className="w-[350px]">
+              <h1 className="text-[40px] text-gray500">05 FORM</h1>
+              <div className="w-full p-[2px] bg-gray500 rounded-full"></div>
+
+              <div>
+                <div className="gap-5 mt-5">
+                  <h1 className="text-md">STANDARD</h1>
+                  <div className="flex-col space-y-5">
+                    <FormInput placeholder="Empty" />
+                    <FormInput value={'Text typed'} />
+                    <FormInput error errorMessage={'Error message here'} />
+                  </div>
+                </div>
+                <div className="gap-5 mt-5">
+                  <h1 className="text-md">DROPDOWN</h1>
+                  <FormDropdown />
+                </div>
+              </div>
+            </div>
+
+            <div className="w-[350px]">
+              <h1 className="text-[40px] text-gray500">06 ICONS</h1>
+              <div className="w-full p-[2px] bg-gray500 rounded-full"></div>
+              <div className="mt-2 flex-col gap-5 text-gray500">
+                <p className="text-body">Library phosphor</p>
+                <a
+                  target="_blank"
+                  className="text-body hover:text-gray700"
+                  href="https://phosphoricons.com"
+                  rel="noreferrer"
+                >
+                  https://phosphoricons.com/
+                </a>
+                <div className="flex-col mt-6 space-y-5 text-gray900">
+                  <div className="flex items-center gap-6">
+                    <CaretDown size={32} />
+                    <p>CaretDown</p>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <CaretRight size={32} />
+                    <p>CaretRight</p>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <Wallet size={32} />
+                    <p>Wallet</p>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <X size={32} />
+                    <p>X</p>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <RocketLaunch size={32} />
+                    <p>RocketLaunch</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>
-
-    // <div className="mx-auto w-full flex flex-col justify-center">
-    //   <div className="mx-auto">
-    //     <h1>04. BUTTONS</h1>
-    //     <div className="space-x-12">
-    //       <Button type="danger" disabled />
-    //       <Button type="danger" />
-    //       <Button type="continue" />
-    //       <Button type="success" />
-    //       <Button type="ghost" />
-    //       <Button />
-    //     </div>
-    //   </div>
-
-    //   <div className="mx-auto mt-32">
-    //     <h1>05. FORMS</h1>
-    //     <FormInput label="Digite" placeholder="digite..." error />
-    //     <div className="mt-12">
-    //       <FormDropdow />
-    //     </div>
-    //   </div>
-    // </div>
   )
 }
