@@ -1,20 +1,9 @@
-import { useAddress, useMetamask } from '@thirdweb-dev/react'
-import { CircleNotch, Wallet } from 'phosphor-react'
-import { useState } from 'react'
+import { useAddress } from '@thirdweb-dev/react'
 import scPhoto from '../assets/scphoto.png'
+import WalletConnector from '../components/WalletConnector'
 
 export default function Home() {
-  const connectWithMetamask = useMetamask()
-
   const address = useAddress()
-
-  const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false)
-
-  async function handleConnectWithMetamask() {
-    setIsAuthenticating(true)
-    await connectWithMetamask()
-    setIsAuthenticating(false)
-  }
 
   if (!address) {
     return (
@@ -27,19 +16,7 @@ export default function Home() {
             <p className="text-white text-lg">
               You need to connect your wallet to start deploying new contracts.
             </p>
-            <button
-              onClick={handleConnectWithMetamask}
-              className="flex rounded-full text-md bg-white text-purple300 font-bold py-2 px-3 items-center justify-center hover:bg-gray-300 transition duration-500 gap-2 w-48"
-            >
-              {isAuthenticating ? (
-                <CircleNotch size={24} className="animate-spin" />
-              ) : (
-                <>
-                  <span>Connect Wallet</span>
-                  <Wallet size={24} />
-                </>
-              )}
-            </button>
+            <WalletConnector />
           </div>
           <div className="hidden lg:flex lg:flex-1 relative w-full h-full justify-end">
             <img

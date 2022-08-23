@@ -1,11 +1,24 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { ThirdwebProvider, ChainId } from '@thirdweb-dev/react'
 import SonicaBaseLayout from '../layouts/SonicaBaseLayout'
 import { useRouter } from 'next/router'
+// import ThirdwebProviderChains from '../layouts/ThirdwebProviderChains'
+import { ChainId, ThirdwebProvider } from '@thirdweb-dev/react'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter()
+
+  // const connectors: WalletConnector[] = [
+  //   'metamask',
+  //   'walletConnect',
+  //   'walletLink',
+  //   {
+  //     name: 'magic',
+  //     options: {
+  //       apiKey: process.env.API_KEY_MAGIC_LINK,
+  //     },
+  //   },
+  // ]
 
   // const chains = [
   //   ChainId.Fantom,
@@ -17,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   // ]
 
   return (
+    // <ThirdwebProviderChains>
     <ThirdwebProvider desiredChainId={ChainId.Goerli}>
       {pathname !== '/designsystem' ? (
         <SonicaBaseLayout>
@@ -26,6 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       )}
     </ThirdwebProvider>
+    // </ThirdwebProviderChains>
   )
 }
 
