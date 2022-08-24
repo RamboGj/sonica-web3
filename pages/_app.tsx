@@ -3,22 +3,36 @@ import type { AppProps } from 'next/app'
 import SonicaBaseLayout from '../layouts/SonicaBaseLayout'
 import { useRouter } from 'next/router'
 // import ThirdwebProviderChains from '../layouts/ThirdwebProviderChains'
-import { ChainId, ThirdwebProvider } from '@thirdweb-dev/react'
+import {
+  ChainId,
+  // MagicConnectorType,
+  ThirdwebProvider,
+  WalletConnector,
+} from '@thirdweb-dev/react'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter()
 
-  // const connectors: WalletConnector[] = [
-  //   'metamask',
-  //   'walletConnect',
-  //   'walletLink',
-  //   {
-  //     name: 'magic',
-  //     options: {
-  //       apiKey: process.env.API_KEY_MAGIC_LINK,
-  //     },
+  const connectors: WalletConnector[] = [
+    'metamask',
+    'walletConnect',
+    'walletLink',
+    'gnosis',
+  ]
+
+  // const magicConnect: MagicConnectorType = {
+  //   name: 'magic',
+  //   options: {
+  //     apiKey: process.env.NEXT_PUBLIC_API_KEY_MAGIC_LINK
+  //       ? process.env.NEXT_PUBLIC_API_KEY_MAGIC_LINK
+  //       : '',
+  //     rpcUrls: '',
   //   },
-  // ]
+  // }
+
+  // if (process.env.NEXT_PUBLIC_API_KEY_MAGIC_LINK) {
+  //   connectors.push(magicConnect)
+  // }
 
   // const chains = [
   //   ChainId.Fantom,
@@ -31,7 +45,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     // <ThirdwebProviderChains>
-    <ThirdwebProvider desiredChainId={ChainId.Goerli}>
+    <ThirdwebProvider
+      walletConnectors={connectors}
+      desiredChainId={ChainId.Goerli}
+    >
       {pathname !== '/designsystem' ? (
         <SonicaBaseLayout>
           <Component {...pageProps} />

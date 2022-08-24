@@ -2,6 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import {
   useAddress,
   useDisconnect,
+  // useMagic,
   useMetamask,
   useWalletConnect,
 } from '@thirdweb-dev/react'
@@ -10,27 +11,36 @@ import { Fragment, useState } from 'react'
 import Image from 'next/image'
 import metamask from '../assets/metamask.svg'
 import walletconnect from '../assets/walletconnect.svg'
+// import magic from '../assets/magic.svg'
 
 export default function WalletConnector() {
   const address = useAddress()
   const disconnect = useDisconnect()
   const connectWithMetamask = useMetamask()
   const connectWithWalletConnect = useWalletConnect()
+  // const connectWithMagicLink = useMagic()
 
   const authenticationMethods = [
     { type: 'Metamask', logo: metamask },
     { type: 'WalletConnect', logo: walletconnect },
+    // { type: 'Email Magic', logo: magic },
   ]
 
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false)
+
+  // const email = 'jpramboguanabara@hotmail.com'
 
   async function connectWallet(type: string) {
     setIsAuthenticating(true)
     if (type.toLowerCase() === 'metamask') {
       await connectWithMetamask()
+      setIsAuthenticating(false)
     } else if (type.toLowerCase() === 'walletconnect') {
       await connectWithWalletConnect()
-    }
+      setIsAuthenticating(false)
+    } // } else if (type.toLowerCase() === 'email magic') {
+    //   await connectWithMagicLink({ email })
+    // }
     setIsAuthenticating(false)
   }
 
@@ -61,7 +71,7 @@ export default function WalletConnector() {
                     <button
                       onClick={disconnect}
                       className={`${
-                        active ? 'bg-purple300 text-white' : 'text-gray-900'
+                        active ? 'bg-purple300 text-white' : 'text-gray900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-x-2`}
                     >
                       <X size={24} className="text-purple500" />
@@ -97,12 +107,12 @@ export default function WalletConnector() {
         </div>
         <Transition
           as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
+          enter="transition ease-out duration-300"
+          enterFrom="transform opacity-0 scale-50"
           enterTo="transform opacity-100 scale-100"
           leave="transition ease-in duration-75"
           leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
+          leaveTo="transform opacity-0 scale-50"
         >
           <Menu.Items className="absolute mt-2 w-[280px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             {authenticationMethods.map((method) => {
@@ -113,14 +123,14 @@ export default function WalletConnector() {
                       <button
                         onClick={() => connectWallet(method.type)}
                         className={`${
-                          active ? 'bg-purple500 text-white' : 'text-gray-900'
+                          active ? 'bg-purple500 text-white' : 'text-gray900'
                         } group flex w-full items-center rounded-md px-2 py-2 text-sm gap-x-2`}
                       >
                         <Image
                           width={25}
                           height={25}
                           src={method.logo}
-                          alt="logo do método de conexão"
+                          alt=""
                         />
                         {method.type}
                       </button>
