@@ -2,7 +2,7 @@ interface ButtonProps {
   type?: 'danger' | 'attention' | 'success' | 'continue' | 'ghost'
   disabled?: boolean
   label?: string
-  action: () => void
+  action?: () => void
 }
 
 export default function Button({ type, disabled, label, action }: ButtonProps) {
