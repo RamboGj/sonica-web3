@@ -9,6 +9,7 @@ import {
   ThirdwebProvider,
   WalletConnector,
 } from '@thirdweb-dev/react'
+import NetworkContextProvider from '../contexts/NetworkContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter()
@@ -49,13 +50,15 @@ function MyApp({ Component, pageProps }: AppProps) {
       walletConnectors={connectors}
       desiredChainId={ChainId.Goerli}
     >
-      {pathname !== '/designsystem' ? (
-        <SonicaBaseLayout>
+      <NetworkContextProvider>
+        {pathname !== '/designsystem' ? (
+          <SonicaBaseLayout>
+            <Component {...pageProps} />
+          </SonicaBaseLayout>
+        ) : (
           <Component {...pageProps} />
-        </SonicaBaseLayout>
-      ) : (
-        <Component {...pageProps} />
-      )}
+        )}
+      </NetworkContextProvider>
     </ThirdwebProvider>
     // </ThirdwebProviderChains>
   )
