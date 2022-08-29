@@ -14,6 +14,7 @@ import metamask from '../assets/metamask.svg'
 import walletconnect from '../assets/walletconnect.svg'
 import SwitchNetworkModal from './Modals/SwitchNetworkModal'
 import { useNetworkContext } from '../contexts/NetworkContext'
+import toast from 'react-hot-toast'
 
 export default function WalletConnector() {
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false)
@@ -34,6 +35,11 @@ export default function WalletConnector() {
     { type: 'WalletConnect', logo: walletconnect },
   ]
 
+  async function handleCopyAddress() {
+    address && (await navigator.clipboard.writeText(address))
+    toast.success('Wallet address successfully copied!')
+  }
+
   const dropdownOptions = [
     {
       name: 'Disconnect',
@@ -43,7 +49,7 @@ export default function WalletConnector() {
     {
       name: 'Copy Address',
       icon: Copy,
-      action: () => address && navigator.clipboard.writeText(address),
+      action: handleCopyAddress,
     },
     {
       name: 'Switch Network',

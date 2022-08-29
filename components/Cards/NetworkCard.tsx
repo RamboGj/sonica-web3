@@ -16,13 +16,13 @@ export default function NetworkCard({
   return (
     <div
       onClick={action}
-      className="flex justify-between py-2 px-4 items-center text-md font-medium text-purple500 rounded-md shadow-xl bg-white hover:bg-gray500 hover:cursor-pointer hover:scale-105 transition duration-300"
+      className="flex justify-between py-2 px-4 items-center text-md font-medium text-black rounded-md shadow-xl bg-white hover:bg-gray500 hover:cursor-pointer hover:scale-105 transition duration-300"
     >
       <div className="flex items-center gap-x-4">
         <Image src={image} width={32} height={32} alt="" />
         <p>{network}</p>
       </div>
-      <span>({symbol})</span>
+      <span className="text-purple300">({symbol})</span>
     </div>
   )
 }

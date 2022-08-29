@@ -51,19 +51,19 @@ export default function SwitchNetworkModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-[540px] text-white bg-gradient-to-b from-purple300 to-gray900  px-10 flex flex-col justify-center pt-10 pb-16 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-[540px] text-white  px-10 flex flex-col justify-center pt-10 pb-16 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
                     <div className="flex items-center justify-between">
-                      <h1 className="text-title text-white text-center text-[30px]">
+                      <h1 className="text-title text-black text-center text-[30px] mx-auto">
                         Switch Network
                       </h1>
                       <X
                         size={32}
                         onClick={close}
-                        className="text-white cursor-pointer hover:text-gray500 transtion duration-500 justify-end"
+                        className="text-black cursor-pointer hover:text-gray500 transtion duration-500 justify-end"
                       />
                     </div>
                   </Dialog.Title>
@@ -72,12 +72,12 @@ export default function SwitchNetworkModal({
                       <div className="my-56 mx-auto flex justify-center">
                         <CircleNotch
                           size={128}
-                          className="text-white animate-spin"
+                          className="text-purple300 animate-spin"
                         />
                       </div>
                     ) : (
                       <>
-                        <p className="text-md text-white">
+                        <p className="text-lg text-purple300 text-center font-medium">
                           Choose which network you want to switch to
                         </p>
                         <div className="mt-6">

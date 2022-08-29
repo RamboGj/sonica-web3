@@ -1,4 +1,4 @@
-import { ChainId, SUPPORTED_CHAIN_ID } from '@thirdweb-dev/sdk'
+import { ChainId } from '@thirdweb-dev/sdk'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import ethereum from '../assets/ethereum.svg'
 import polygon from '../assets/polygon.svg'
@@ -20,7 +20,7 @@ interface NetworkContextProviderProps {
 
 interface NetworkContextProps {
   networksList: NetworkListProps[]
-  handleSwitchNetwork: (chainId: number, networkName: string) => void
+  handleSwitchNetwork: (chainId: number, chainLogo: string) => void
   isSwitchingNetwork: boolean
   setIsSwitchingNetwork: (isSwitchingNetwork: boolean) => void
   isSwitchNetworkModal: boolean
@@ -42,7 +42,6 @@ export default function NetworkContextProvider({
     useState<boolean>(false)
 
   const [, switchNetwork] = useNetwork()
-  const { '0': networkData } = useNetwork()
 
   const networksList = [
     {
@@ -96,14 +95,14 @@ export default function NetworkContextProvider({
     },
   ]
 
-  async function handleSwitchNetwork(chainId: number, networkImage: string) {
+  async function handleSwitchNetwork(chainId: ChainId, chainLogo: string) {
     setIsSwitchingNetwork(true)
     if (switchNetwork) {
       await switchNetwork(chainId)
 
+      setNetworkImage(chainLogo)
       setIsSwitchNetworkModal(false)
       setIsSwitchingNetwork(false)
-      setNetworkImage(networkImage)
     }
   }
 
@@ -113,7 +112,7 @@ export default function NetworkContextProvider({
     })
 
     setNetworkImage(currentNetwork[0].logo)
-  }, [])
+  }, [activeChainId])
 
   return (
     <NetworkContext.Provider
