@@ -81,7 +81,7 @@ export default function SwitchNetworkModal({
                           Choose which network you want to switch to
                         </p>
                         <div className="mt-6">
-                          <h1 className="text-lg">Mainnets</h1>
+                          <h1 className="text-lg text-purple300">Mainnets</h1>
 
                           <div className="space-y-4 mt-4">
                             {mainnets.map((mainnet) => {
@@ -103,7 +103,7 @@ export default function SwitchNetworkModal({
                           </div>
                         </div>
                         <div className="mt-6">
-                          <h1 className="text-lg">Testnets</h1>
+                          <h1 className="text-lg text-purple300">Testnets</h1>
 
                           <div className="space-y-4 mt-4">
                             {testnets.map((testnet) => {
