@@ -15,6 +15,7 @@ import walletconnect from '../assets/walletconnect.svg'
 import SwitchNetworkModal from './Modals/SwitchNetworkModal'
 import { useNetworkContext } from '../contexts/NetworkContext'
 import toast from 'react-hot-toast'
+import { useRouter } from 'next/router'
 
 export default function WalletConnector() {
   const [isAuthenticating, setIsAuthenticating] = useState<boolean>(false)
@@ -26,6 +27,7 @@ export default function WalletConnector() {
   const connectWithMetamask = useMetamask()
   const connectWithWalletConnect = useWalletConnect()
   const { '0': networkData } = useNetwork()
+  const router = useRouter()
 
   const { isSwitchNetworkModal, setIsSwitchNetworkModal, networkImage } =
     useNetworkContext()
@@ -76,11 +78,13 @@ export default function WalletConnector() {
 
       setIsAuthenticating(false)
       setIsActive(false)
+      router.push('/dashboard')
     } else if (type.toLowerCase() === 'walletconnect') {
       await connectWithWalletConnect()
 
       setIsAuthenticating(false)
       setIsActive(false)
+      router.push('/dashboard')
     }
   }
 

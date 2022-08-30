@@ -1,6 +1,6 @@
 import logoSonica from '../../assets/logo-sonica.svg'
 import Image from 'next/image'
-import Button from '../../components/Button'
+import Button from '../../components/Buttons/Button'
 import FormInput from '../../components/Form/FormInput'
 import FormDropdown from '../../components/Form/FormDropwdown'
 import { CaretDown, CaretRight, RocketLaunch, Wallet, X } from 'phosphor-react'

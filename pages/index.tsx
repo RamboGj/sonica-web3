@@ -33,11 +33,4 @@ export default function Home() {
       </div>
     )
   }
-
-  return (
-    <div className="w-screen h-full px-12">
-      <h1>LOGGED IN!</h1>
-      <Toaster position="top-center" />
-    </div>
-  )
 }
