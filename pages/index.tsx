@@ -1,10 +1,19 @@
 import { useAddress } from '@thirdweb-dev/react'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import scPhoto from '../assets/scphoto.png'
 import WalletConnector from '../components/WalletConnector'
 
 export default function Home() {
   const address = useAddress()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (address) {
+      router.push('/dashboard')
+    }
+  }, [address])
 
   if (!address) {
     return (

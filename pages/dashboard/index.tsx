@@ -1,17 +1,12 @@
-import { useAddress, useDisconnect } from '@thirdweb-dev/react'
+import { useDisconnect } from '@thirdweb-dev/react'
 import { useRouter } from 'next/router'
 import { CaretLeft, Plus, Wallet } from 'phosphor-react'
 import { Toaster } from 'react-hot-toast'
 import Button from '../../components/Buttons/Button'
 
-export default function Dashboar() {
+export default function Dashboard() {
   const disconnect = useDisconnect()
   const router = useRouter()
-  const address = useAddress()
-
-  if (!address) {
-    router.push('/')
-  }
 
   return (
     <div className="w-screen h-[calc(100vh_-_6rem)] px-12">

@@ -24,6 +24,7 @@ export default function WalletConnector() {
   const balance = useBalance()
   const address = useAddress()
   const disconnect = useDisconnect()
+
   const connectWithMetamask = useMetamask()
   const connectWithWalletConnect = useWalletConnect()
   const { '0': networkData } = useNetwork()
@@ -41,6 +42,12 @@ export default function WalletConnector() {
     address && (await navigator.clipboard.writeText(address))
     toast.success('Wallet address successfully copied!')
   }
+
+  useEffect(() => {
+    if (!address) {
+      router.push('/')
+    }
+  }, [address])
 
   const dropdownOptions = [
     {
@@ -78,13 +85,11 @@ export default function WalletConnector() {
 
       setIsAuthenticating(false)
       setIsActive(false)
-      router.push('/dashboard')
     } else if (type.toLowerCase() === 'walletconnect') {
       await connectWithWalletConnect()
 
       setIsAuthenticating(false)
       setIsActive(false)
-      router.push('/dashboard')
     }
   }
 

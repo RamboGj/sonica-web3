@@ -33,20 +33,10 @@ export default function ContractsList() {
             These are the contracts you are able to deploy:
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 w-full h-full place-items-center gap-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 w-full h-full place-items-center gap-y-12">
           {deployableContractsList.map((contract) => {
             return (
               <>
-                <NFTCollection
-                  image={contract.image}
-                  name={contract.name}
-                  description={contract.description}
-                />
-                <NFTCollection
-                  image={contract.image}
-                  name={contract.name}
-                  description={contract.description}
-                />
                 <NFTCollection
                   image={contract.image}
                   name={contract.name}
