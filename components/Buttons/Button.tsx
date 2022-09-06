@@ -1,3 +1,4 @@
+import { CircleNotch } from 'phosphor-react'
 import React, { ReactElement } from 'react'
 
 interface ButtonProps {
@@ -7,6 +8,7 @@ interface ButtonProps {
   action?: () => void
   hasIcon?: boolean
   icon?: ReactElement
+  isLoading?: boolean
 }
 
 export default function Button({
@@ -16,6 +18,7 @@ export default function Button({
   action,
   hasIcon,
   icon,
+  isLoading,
 }: ButtonProps) {
   const styles = {
     default: 'bg-purple100 hover:bg-purple300',
@@ -31,16 +34,32 @@ export default function Button({
     return (
       <button
         onClick={action}
-        disabled={disabled}
+        disabled={disabled || isLoading}
         className={`${styles.ghost} w-fit px-4 rounded-md py-[12px] h-12 font-medium disabled:bg-gray300 disabled:text-gray500 transition duration-500 shadow-xl`}
       >
         {hasIcon ? (
           <div className="flex items-center gap-x-3">
             <div>{icon}</div>
-            <p className="hidden md:block">{label || 'Button'}</p>
+            {isLoading ? (
+              <CircleNotch
+                className="animate-spin text-white mx-auto h-full"
+                width={32}
+              />
+            ) : (
+              <p className="hidden md:block">{label || 'Button'}</p>
+            )}
           </div>
         ) : (
-          <p>{label || 'Button'}</p>
+          <>
+            {isLoading ? (
+              <CircleNotch
+                className="animate-spin text-white mx-auto h-full"
+                width={32}
+              />
+            ) : (
+              <p>{label || 'Button'}</p>
+            )}
+          </>
         )}
       </button>
     )
@@ -48,7 +67,7 @@ export default function Button({
     return (
       <button
         onClick={action}
-        disabled={disabled}
+        disabled={disabled || isLoading}
         className={`${
           type === 'danger'
             ? `${styles.danger}`
@@ -67,7 +86,16 @@ export default function Button({
             <p className="hidden md:block">{label || 'Button'}</p>
           </div>
         ) : (
-          <p>{label || 'Button'}</p>
+          <>
+            {isLoading ? (
+              <CircleNotch
+                width={32}
+                className="animate-spin text-white mx-auto h-full"
+              />
+            ) : (
+              <p>{label || 'Button'}</p>
+            )}
+          </>
         )}
       </button>
     )

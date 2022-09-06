@@ -2,9 +2,14 @@ import { useRouter } from 'next/router'
 import { CaretLeft } from 'phosphor-react'
 import Button from '../../../components/Buttons/Button'
 import nftCollection from '../../../assets/contracts/nft-collection.png'
-import NFTCollection from '../../../components/Cards/NFTCollection'
+import ContractToDeploy from '../../../components/Cards/ContractToDeploy'
+import { useState } from 'react'
+import DeployContractModal from '../../../components/Modals/DeployContractModal'
 
 export default function ContractsList() {
+  const [isDeployContractModal, setIsDeployContractModal] =
+    useState<boolean>(false)
+
   const router = useRouter()
 
   const deployableContractsList = [
@@ -37,10 +42,16 @@ export default function ContractsList() {
           {deployableContractsList.map((contract) => {
             return (
               <>
-                <NFTCollection
+                <ContractToDeploy
+                  onClick={() => setIsDeployContractModal(true)}
                   image={contract.image}
                   name={contract.name}
                   description={contract.description}
+                />
+                <DeployContractModal
+                  contractName={contract.name}
+                  close={() => setIsDeployContractModal(false)}
+                  isOpen={isDeployContractModal}
                 />
               </>
             )

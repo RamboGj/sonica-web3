@@ -1,29 +1,98 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { CircleNotch, X } from 'phosphor-react'
-import { Fragment } from 'react'
-import { useNetworkContext } from '../../contexts/NetworkContext'
-import NetworkCard from '../Cards/NetworkCard'
+import { X } from 'phosphor-react'
+import { Fragment, useState } from 'react'
+import FormInput from '../Form/FormInput'
+import uploadImage from '../../assets/upload.svg'
+import Image from 'next/image'
+import Button from '../Buttons/Button'
+import { ApexOptions } from 'apexcharts'
+import dynamic from 'next/dynamic'
+import { mainnets, testnets } from '../../utils/constants'
+import NetworkCircleCard from '../Cards/NetworkCircleCard'
+import { ChainId } from '@thirdweb-dev/sdk'
+import ImageUploading, {
+  ImageListType,
+  ImageType,
+} from 'react-images-uploading'
+import { useSDK } from '@thirdweb-dev/react'
 
 interface SwitchNetworkModalProps {
   isOpen: boolean
+  contractName: string
   close: () => void
 }
+
+const Chart = dynamic(() => import('react-apexcharts'), {
+  ssr: false,
+})
 
 export default function DeployContractModal({
   isOpen,
   close,
+  contractName,
 }: SwitchNetworkModalProps) {
-  const { networksList, handleSwitchNetwork, isSwitchingNetwork } =
-    useNetworkContext()
+  const [tokenName, setTokenName] = useState<string>('')
+  const [tokenSymbol, setTokenSymbol] = useState<string>('')
+  const [tokenDescription, setTokenDescription] = useState<string>('')
+  const [primarySalesAddress, setPrimarySalesAddress] = useState<string>('')
+  const [royaltiesPercentageAddress, setRoyaltiesPercentageAddress] =
+    useState<string>('')
+  const [royaltiesPercentage, setRoyaltiesPercentage] = useState<number>(0)
+  const [selectedChainToDeploy, setSelectedChainToDeploy] = useState<ChainId>(0)
+  const [isDeploying, setIsDeploying] = useState<boolean>(false)
 
-  const mainnets = networksList.filter((net) => {
-    return net.networkType === 'mainnet'
-  })
+  const platformAddress = '0x1A8F4f7eB2134E8ad141A761aF528B74640712eC'
 
-  const testnets = networksList.filter((net) => {
-    return net.networkType === 'testnet'
-  })
+  const [images, setImages] = useState<ImageType[]>([])
 
+  const sdk = useSDK()
+
+  async function createContract() {
+    setIsDeploying(true)
+    const contractAddress = await sdk?.deployer.deployNFTCollection({
+      name: tokenName,
+      symbol: tokenSymbol,
+      description: tokenDescription,
+      image: images[0].file,
+      primary_sale_recipient: primarySalesAddress,
+      fee_recipient: royaltiesPercentageAddress,
+      seller_fee_basis_points: royaltiesPercentage * 100,
+      platform_fee_recipient: platformAddress,
+      platform_fee_basis_points: 1000, // 10%
+    })
+
+    setIsDeploying(false)
+    console.log('contractAddress: ', contractAddress)
+  }
+
+  const primarySalesPercentage: number = 100 - (royaltiesPercentage + 10)
+
+  const chartOptions: ApexOptions = {
+    series: [primarySalesPercentage, royaltiesPercentage, 10],
+    colors: ['#730ECC', '#05D869', '#222222'],
+    labels: ['Primary sales', 'Royalties', 'Platform Fee'],
+    dataLabels: {
+      enabled: false,
+    },
+
+    legend: {
+      itemMargin: {
+        horizontal: 50,
+      },
+
+      fontFamily: 'Kanit',
+      fontWeight: 300,
+      position: 'bottom',
+      inverseOrder: false,
+      width: 250,
+    },
+  }
+
+  const onChange = (imageList: ImageListType) => {
+    // data for submit
+    console.log('image data: ', imageList)
+    setImages(imageList)
+  }
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -51,14 +120,14 @@ export default function DeployContractModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-[540px] text-white  px-10 flex flex-col justify-center pt-10 pb-16 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-[840px] text-white px-10 flex flex-col justify-center pt-10 pb-16 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
                     <div className="flex items-center justify-between">
                       <h1 className="text-title text-black text-center text-[30px] mx-auto">
-                        Switch Network
+                        Deploying {contractName}
                       </h1>
                       <X
                         size={32}
@@ -67,65 +136,237 @@ export default function DeployContractModal({
                       />
                     </div>
                   </Dialog.Title>
-                  <div className="mt-5 mx-auto flex-col justify-center w-full h-full">
-                    {isSwitchingNetwork ? (
-                      <div className="my-56 mx-auto flex justify-center">
-                        <CircleNotch
-                          size={128}
-                          className="text-purple300 animate-spin"
-                        />
+                  <div className="mt-12  mx-auto flex-col justify-center w-full h-full text-gray900">
+                    <div className="flex-col items-start">
+                      <div className="flex gap-x-4">
+                        <ImageUploading
+                          value={images}
+                          onChange={onChange}
+                          maxNumber={1}
+                        >
+                          {({
+                            imageList,
+                            onImageUpload,
+                            onImageRemoveAll,
+                            onImageUpdate,
+                            onImageRemove,
+                            isDragging,
+                            dragProps,
+                          }) => {
+                            return (
+                              <button
+                                disabled={imageList.length > 0}
+                                onClick={onImageUpload}
+                                className={`w-[210px] h-[212px] flex-col justify-center rounded-md px-6 py-8 space-y-2 border hover:border-purple500 hover:bg-white hover:cursor-pointer transition duration-500 ${
+                                  imageList.length > 0
+                                    ? `bg-white border-purple300`
+                                    : `bg-gray300 border-transparent`
+                                }`}
+                              >
+                                {imageList.length > 0 ? (
+                                  <Image
+                                    className="flex justify-center m-auto"
+                                    src={String(imageList[0].dataURL)}
+                                    width={180}
+                                    height={180}
+                                    alt="uploaded image"
+                                  />
+                                ) : (
+                                  <>
+                                    <div className="w-full justify-center flex">
+                                      <Image
+                                        src={uploadImage}
+                                        width={68}
+                                        height={82}
+                                        alt="upload image image"
+                                      />
+                                    </div>
+
+                                    <div className="text-center space-y-2">
+                                      <h1 className="text-purple500 font-light">
+                                        Upload file
+                                      </h1>
+
+                                      <p className="text-xs px-4">
+                                        Upload your NFT image file here
+                                      </p>
+                                    </div>
+                                  </>
+                                )}
+                              </button>
+                            )
+                          }}
+                        </ImageUploading>
+
+                        <div className="items-start flex-col flex-1 space-y-2">
+                          <div className="items-start">
+                            <FormInput
+                              value={tokenName}
+                              setValue={setTokenName}
+                              label="Name"
+                              placeholder='e.g. "Bitcoin", "Ethereum" '
+                            />
+                          </div>
+                          <div>
+                            <FormInput
+                              value={tokenSymbol}
+                              setValue={setTokenSymbol}
+                              label="Symbol"
+                              placeholder='e.g. "BTC", "ETH" '
+                            />
+                          </div>
+                          <div>
+                            <p className="text-body text-black">
+                              Lorem, ipsum dolor sit amet consectetur
+                              adipisicing elit. Sed qui, quas fugit laudantium
+                              quis facere,
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    ) : (
-                      <>
-                        <p className="text-lg text-purple300 text-center font-medium">
-                          Choose which network you want to switch to
-                        </p>
-                        <div className="mt-6">
-                          <h1 className="text-lg text-purple300">Mainnets</h1>
 
-                          <div className="space-y-4 mt-4">
-                            {mainnets.map((mainnet) => {
-                              return (
-                                <NetworkCard
-                                  network={mainnet.name}
-                                  symbol={mainnet.symbol}
-                                  action={() =>
-                                    handleSwitchNetwork(
-                                      mainnet.id,
-                                      mainnet.logo,
-                                    )
-                                  }
-                                  key={mainnet.id}
-                                  image={mainnet.logo}
-                                />
-                              )
-                            })}
+                      <div className="mt-4">
+                        <div className="w-full space-y-2">
+                          <label
+                            htmlFor="desc"
+                            className="text-purple500 font-bold text-title"
+                          >
+                            Description
+                          </label>
+                          <textarea
+                            value={tokenDescription}
+                            onChange={(e) =>
+                              setTokenDescription(e.target.value)
+                            }
+                            id="desc"
+                            className="flex flex-1 w-full max-h-[80px] py-2 px-4 rounded-md border border-gray300"
+                            placeholder={`The description of your ${contractName}`}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex py-5 px-6 border border-gray300 rounded-md mt-5 gap-x-5">
+                        <div className="flex-col flex-1 space-y-4">
+                          <div>
+                            <FormInput
+                              value={primarySalesAddress}
+                              setValue={setPrimarySalesAddress}
+                              label="Primary Sales"
+                              placeholder="The wallet address that should receive the initial sales"
+                            />
+                          </div>
+
+                          <div className="flex items-end gap-x-2">
+                            <div className="flex-1">
+                              <FormInput
+                                value={royaltiesPercentageAddress}
+                                setValue={setRoyaltiesPercentageAddress}
+                                label="Royalties"
+                                placeholder="The wallet address that should receive the royalties"
+                              />
+                            </div>
+
+                            <div className="max-w-[72px] h-[46px] flex justify-center bg-white rounded-md border p-2 items-center">
+                              <div className="w-[14px] text-gray500">{'%'}</div>
+                              <input
+                                maxLength={2}
+                                value={royaltiesPercentage}
+                                onChange={(e) =>
+                                  setRoyaltiesPercentage(Number(e.target.value))
+                                }
+                                type="text"
+                                className="w-full h-full rounded-md p-2 focus:border-0 focus:outline-none"
+                              />
+                            </div>
+                          </div>
+                          <div className="flex items-end gap-x-2">
+                            <div className="flex-1 text-gray500">
+                              <FormInput
+                                value=""
+                                label="Platform Fee"
+                                disabled
+                                placeholder="The wallet address that should receive the royalties"
+                              />
+                            </div>
+
+                            <div className="max-w-[72px] h-[46px] flex gap-x-2 justify-center mx-auto bg-white rounded-md border p-2 items-center text-gray500 disabled:bg-gray300 disabled:cursor-not-allowed">
+                              <span className="disabled">{'%'}</span>
+                              <input
+                                maxLength={2}
+                                disabled
+                                value={10}
+                                type="text"
+                                className="w-full h-full rounded-md focus:border-0 focus:outline-none"
+                              />
+                            </div>
                           </div>
                         </div>
-                        <div className="mt-6">
-                          <h1 className="text-lg text-purple300">Testnets</h1>
+                        <div className="w-[200px] hidden lg:flex justify-center">
+                          <Chart
+                            options={chartOptions}
+                            width={280}
+                            series={chartOptions.series}
+                            type="donut"
+                          />
+                        </div>
+                      </div>
 
-                          <div className="space-y-4 mt-4">
-                            {testnets.map((testnet) => {
-                              return (
-                                <NetworkCard
-                                  action={() =>
-                                    handleSwitchNetwork(
-                                      testnet.id,
-                                      testnet.logo,
-                                    )
-                                  }
-                                  key={testnet.id}
-                                  image={testnet.logo}
-                                  network={testnet.name}
-                                  symbol={testnet.symbol}
-                                />
-                              )
-                            })}
+                      <div className="mt-4">
+                        <h1 className="text-title3 text-purple500">
+                          Network / Chain
+                        </h1>
+                        <div className="flex justify-between mt-2">
+                          <div>
+                            <h3>Mainnets</h3>
+                            <div className="flex gap-x-4 mt-2">
+                              {mainnets.map((mainnet) => {
+                                return (
+                                  <NetworkCircleCard
+                                    key={mainnet.id}
+                                    onClick={() => {
+                                      setSelectedChainToDeploy(mainnet.id)
+                                    }}
+                                    chainSymbol={mainnet.symbol}
+                                    chainId={mainnet.id}
+                                    chainName={mainnet.name}
+                                    selectedChainId={selectedChainToDeploy}
+                                    image={mainnet.logo}
+                                  />
+                                )
+                              })}
+                            </div>
+                          </div>
+                          <div>
+                            <h3>Testnets</h3>
+                            <div className="flex gap-x-4 mt-2">
+                              {testnets.map((testnet) => {
+                                return (
+                                  <NetworkCircleCard
+                                    key={testnet.id}
+                                    onClick={() => {
+                                      setSelectedChainToDeploy(testnet.id)
+                                    }}
+                                    chainId={testnet.id}
+                                    chainSymbol={testnet.symbol}
+                                    chainName={testnet.name}
+                                    selectedChainId={selectedChainToDeploy}
+                                    image={testnet.logo}
+                                  />
+                                )
+                              })}
+                            </div>
+                          </div>
+                          <div className="items-end flex">
+                            <Button
+                              label="Deploy now"
+                              type="success"
+                              action={createContract}
+                              isLoading={isDeploying}
+                            />
                           </div>
                         </div>
-                      </>
-                    )}
+                      </div>
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

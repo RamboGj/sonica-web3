@@ -9,7 +9,7 @@ export default function SonicaBaseLayout({ children }: SonaicaBaseLayoutProps) {
   return (
     <>
       <Header />
-      <main className="h-[calc(100vh_-_6rem)]">{children}</main>
+      <main className="h-[calc(100vh_-_6rem)] bg-gray300">{children}</main>
     </>
   )
 }

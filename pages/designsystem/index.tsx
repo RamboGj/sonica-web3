@@ -260,7 +260,7 @@ export default function DesignSystem() {
                 <div className="gap-5 mt-5">
                   <h1 className="text-md">STANDARD</h1>
                   <div className="flex-col space-y-5">
-                    <FormInput placeholder="Empty" />
+                    <FormInput label="" placeholder="Empty" />
                     <FormInput value={'Text typed'} />
                     <FormInput error errorMessage={'Error message here'} />
                   </div>
