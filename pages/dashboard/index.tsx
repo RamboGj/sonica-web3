@@ -19,7 +19,7 @@ export default function Dashboard() {
           type="ghost"
         />
       </div>
-      <div className="max-w-[1060px] mx-auto flex justify-between items-center pt-24">
+      <div className="max-w-[1060px] mx-auto flex justify-between items-center mt-12">
         <div className="w-full h-full flex flex-col items-center justify-center bg-white shadow-xl py-24 px-8 rounded-md mx-auto">
           <Wallet size={96} className="text-purple300 justify-center" />
           <h1 className="mt-10 text-title1">

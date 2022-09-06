@@ -1,10 +1,7 @@
 import { ChainId } from '@thirdweb-dev/sdk'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import ethereum from '../assets/ethereum.svg'
-import polygon from '../assets/polygon.svg'
-import avax from '../assets/avax.svg'
-import fantom from '../assets/fantom.svg'
 import { useActiveChainId, useNetwork } from '@thirdweb-dev/react'
+import { networksList } from '../utils/constants'
 
 interface NetworkListProps {
   name: string
@@ -42,58 +39,6 @@ export default function NetworkContextProvider({
     useState<boolean>(false)
 
   const [, switchNetwork] = useNetwork()
-
-  const networksList = [
-    {
-      name: 'Goerli',
-      id: ChainId.Goerli,
-      logo: ethereum,
-      symbol: 'GOR',
-      networkType: 'testnet',
-    },
-    {
-      name: 'Rinkeby',
-      id: ChainId.Rinkeby,
-      logo: ethereum,
-      symbol: 'RIN',
-      networkType: 'testnet',
-    },
-    {
-      name: 'Ethereum',
-      id: ChainId.Mainnet,
-      logo: ethereum,
-      symbol: 'ETH',
-      networkType: 'mainnet',
-    },
-    {
-      name: 'Mumbai',
-      id: ChainId.Mumbai,
-      logo: polygon,
-      symbol: 'MATIC',
-      networkType: 'testnet',
-    },
-    {
-      name: 'Polygon',
-      id: ChainId.Polygon,
-      logo: polygon,
-      symbol: 'MATIC',
-      networkType: 'mainnet',
-    },
-    {
-      name: 'Fantom',
-      id: ChainId.Fantom,
-      logo: fantom,
-      symbol: 'FTM',
-      networkType: 'mainnet',
-    },
-    {
-      name: 'Avalanche',
-      id: ChainId.Avalanche,
-      logo: avax,
-      symbol: 'AVAX',
-      networkType: 'mainnet',
-    },
-  ]
 
   async function handleSwitchNetwork(chainId: ChainId, chainLogo: string) {
     setIsSwitchingNetwork(true)

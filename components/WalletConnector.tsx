@@ -205,7 +205,7 @@ export default function WalletConnector() {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-50"
         >
-          <Menu.Items className="absolute mt-2 w-[240px] shadow-xl origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute mt-2 w-[240px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             {authenticationMethods.map((method) => {
               return (
                 <div key={method.type}>

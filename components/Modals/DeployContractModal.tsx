@@ -239,7 +239,7 @@ export default function DeployContractModal({
                               setTokenDescription(e.target.value)
                             }
                             id="desc"
-                            className="flex flex-1 w-full max-h-[80px] py-2 px-4 rounded-md border border-gray300"
+                            className="flex flex-1 w-full max-h-[80px] py-2 px-4 rounded-md border border-gray300 bg-gray-50 hover:bg-white hover:border-purple300 transition duration-500 placeholder:text-sm focus:outline-none focus:border-purple300 focus:bg-white"
                             placeholder={`The description of your ${contractName}`}
                           />
                         </div>
@@ -282,10 +282,9 @@ export default function DeployContractModal({
                           <div className="flex items-end gap-x-2">
                             <div className="flex-1 text-gray500">
                               <FormInput
-                                value=""
+                                value={platformAddress}
                                 label="Platform Fee"
                                 disabled
-                                placeholder="The wallet address that should receive the royalties"
                               />
                             </div>
 
