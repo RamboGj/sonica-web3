@@ -9,17 +9,30 @@ import { ApexOptions } from 'apexcharts'
 import dynamic from 'next/dynamic'
 import { mainnets, testnets } from '../../utils/constants'
 import NetworkCircleCard from '../Cards/NetworkCircleCard'
-import { ChainId } from '@thirdweb-dev/sdk'
 import ImageUploading, {
   ImageListType,
   ImageType,
 } from 'react-images-uploading'
-import { useSDK } from '@thirdweb-dev/react'
+import { ChainId, useAddress, useNetwork, useSDK } from '@thirdweb-dev/react'
+import { useNetworkContext } from '../../contexts/NetworkContext'
 
 interface SwitchNetworkModalProps {
   isOpen: boolean
-  contractName: string
   close: () => void
+  contractType:
+    | 'nft-drop'
+    | 'signature-drop'
+    | 'nft-collection'
+    | 'edition-drop'
+    | 'edition'
+    | 'token-drop'
+    | 'token'
+    | 'vote'
+    | 'split'
+    | 'marketplace'
+    | 'pack'
+    | 'multiwrap'
+  contractName: string
 }
 
 const Chart = dynamic(() => import('react-apexcharts'), {
@@ -29,27 +42,58 @@ const Chart = dynamic(() => import('react-apexcharts'), {
 export default function DeployContractModal({
   isOpen,
   close,
+  contractType,
   contractName,
 }: SwitchNetworkModalProps) {
+  const address = useAddress()
+
   const [tokenName, setTokenName] = useState<string>('')
   const [tokenSymbol, setTokenSymbol] = useState<string>('')
   const [tokenDescription, setTokenDescription] = useState<string>('')
-  const [primarySalesAddress, setPrimarySalesAddress] = useState<string>('')
+  const [primarySalesAddress, setPrimarySalesAddress] = useState<string>(
+    address || '',
+  )
   const [royaltiesPercentageAddress, setRoyaltiesPercentageAddress] =
     useState<string>('')
   const [royaltiesPercentage, setRoyaltiesPercentage] = useState<number>(0)
-  const [selectedChainToDeploy, setSelectedChainToDeploy] = useState<ChainId>(0)
+  const [selectedChainId, setSelectedChainId] = useState<ChainId>(0)
   const [isDeploying, setIsDeploying] = useState<boolean>(false)
 
+  const platformFee = 10 * 100 // 10%
   const platformAddress = '0x1A8F4f7eB2134E8ad141A761aF528B74640712eC'
 
   const [images, setImages] = useState<ImageType[]>([])
 
   const sdk = useSDK()
+  const [, switchNetwork] = useNetwork()
 
-  async function createContract() {
+  const { setNetworkImage, networkImage } = useNetworkContext()
+
+  async function cleanDeployModalData() {
+    setTokenName('')
+    setTokenSymbol('')
+    setTokenDescription('')
+    setPrimarySalesAddress(address || '')
+    setRoyaltiesPercentage(0)
+  }
+
+  async function handleSwitchDeployChain(chainId: ChainId, chainLogo: string) {
+    if (switchNetwork) {
+      const switchChain = await switchNetwork(chainId)
+
+      if (!switchChain.error) {
+        setNetworkImage(chainLogo || networkImage)
+        setSelectedChainId(chainId)
+      } else {
+        setSelectedChainId((previousChaindId) => previousChaindId)
+      }
+    }
+  }
+
+  async function deploy() {
     setIsDeploying(true)
-    const contractAddress = await sdk?.deployer.deployNFTCollection({
+
+    const contractData = {
       name: tokenName,
       symbol: tokenSymbol,
       description: tokenDescription,
@@ -58,10 +102,16 @@ export default function DeployContractModal({
       fee_recipient: royaltiesPercentageAddress,
       seller_fee_basis_points: royaltiesPercentage * 100,
       platform_fee_recipient: platformAddress,
-      platform_fee_basis_points: 1000, // 10%
-    })
+      platform_fee_basis_points: platformFee, // 10%
+    }
+
+    const contractAddress = await sdk?.deployer.deployBuiltInContract(
+      contractType,
+      contractData,
+    )
 
     setIsDeploying(false)
+    cleanDeployModalData()
     console.log('contractAddress: ', contractAddress)
   }
 
@@ -84,7 +134,7 @@ export default function DeployContractModal({
       fontWeight: 300,
       position: 'bottom',
       inverseOrder: false,
-      width: 250,
+      width: 300,
     },
   }
 
@@ -239,7 +289,7 @@ export default function DeployContractModal({
                               setTokenDescription(e.target.value)
                             }
                             id="desc"
-                            className="flex flex-1 w-full max-h-[80px] py-2 px-4 rounded-md border border-gray300 bg-gray-50 hover:bg-white hover:border-purple300 transition duration-500 placeholder:text-sm focus:outline-none focus:border-purple300 focus:bg-white"
+                            className="flex flex-1 w-full max-h-[80px] py-2 px-4 rounded-md border border-gray300 bg-gray-50 hover:bg-gray300 hover:border-purple300 transition duration-500 placeholder:text-sm focus:outline-none focus:border-purple300 focus:bg-white"
                             placeholder={`The description of your ${contractName}`}
                           />
                         </div>
@@ -293,17 +343,17 @@ export default function DeployContractModal({
                               <input
                                 maxLength={2}
                                 disabled
-                                value={10}
+                                value={platformFee / 100}
                                 type="text"
                                 className="w-full h-full rounded-md focus:border-0 focus:outline-none"
                               />
                             </div>
                           </div>
                         </div>
-                        <div className="w-[200px] hidden lg:flex justify-center">
+                        <div className="max-w-[200px] hidden lg:flex justify-center pl-12">
                           <Chart
                             options={chartOptions}
-                            width={280}
+                            width={325}
                             series={chartOptions.series}
                             type="donut"
                           />
@@ -322,13 +372,16 @@ export default function DeployContractModal({
                                 return (
                                   <NetworkCircleCard
                                     key={mainnet.id}
-                                    onClick={() => {
-                                      setSelectedChainToDeploy(mainnet.id)
-                                    }}
+                                    onClick={() =>
+                                      handleSwitchDeployChain(
+                                        mainnet.id,
+                                        mainnet.logo,
+                                      )
+                                    }
+                                    selectedChainId={selectedChainId}
                                     chainSymbol={mainnet.symbol}
                                     chainId={mainnet.id}
                                     chainName={mainnet.name}
-                                    selectedChainId={selectedChainToDeploy}
                                     image={mainnet.logo}
                                   />
                                 )
@@ -342,13 +395,16 @@ export default function DeployContractModal({
                                 return (
                                   <NetworkCircleCard
                                     key={testnet.id}
-                                    onClick={() => {
-                                      setSelectedChainToDeploy(testnet.id)
-                                    }}
+                                    onClick={() =>
+                                      handleSwitchDeployChain(
+                                        testnet.id,
+                                        testnet.logo,
+                                      )
+                                    }
                                     chainId={testnet.id}
+                                    selectedChainId={selectedChainId}
                                     chainSymbol={testnet.symbol}
                                     chainName={testnet.name}
-                                    selectedChainId={selectedChainToDeploy}
                                     image={testnet.logo}
                                   />
                                 )
@@ -359,7 +415,7 @@ export default function DeployContractModal({
                             <Button
                               label="Deploy now"
                               type="success"
-                              action={createContract}
+                              action={deploy}
                               isLoading={isDeploying}
                             />
                           </div>

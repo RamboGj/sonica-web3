@@ -21,11 +21,12 @@ export default function Button({
   isLoading,
 }: ButtonProps) {
   const styles = {
-    default: 'bg-purple100 hover:bg-purple300',
-    danger: 'bg-danger hover:opacity-75',
-    attention: 'bg-attention hover:opacity-75',
-    success: 'bg-success hover:opacity-75',
-    continue: 'bg-continue hover:opacity-75',
+    default:
+      'bg-purple100 hover:bg-purple300  disabled:bg-gray300 disabled:text-gray500',
+    danger: 'bg-danger hover:opacity-75 disabled:bg-disabledDanger',
+    attention: 'bg-attention hover:opacity-75 disabled:bg-disabledAttention',
+    success: 'bg-success hover:opacity-75 disabled:bg-disabledSuccess',
+    continue: 'bg-continue hover:opacity-75 disabled:bg-disabledContinue',
     ghost:
       'bg-white text-purple300 border border-purple300 hover:bg-gray300 hover:border-transparent',
   }
@@ -78,7 +79,7 @@ export default function Button({
             : type === 'continue'
             ? `${styles.continue}`
             : `${styles.default}`
-        } w-[135px] rounded-md py-3 h-12 text-white text-button disabled:bg-gray300 disabled:text-gray500 transition duration-500 shadow-xl`}
+        } w-[135px] rounded-md py-3 h-12 font-medium text-white text-button transition duration-500 shadow-xl`}
       >
         {hasIcon ? (
           <div className="flex items-center gap-x-3">

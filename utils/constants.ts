@@ -1,8 +1,59 @@
-import { ChainId } from '@thirdweb-dev/sdk'
+import { ChainId, IpfsStorage, ContractType } from '@thirdweb-dev/sdk'
 import ethereum from '../assets/ethereum.svg'
 import polygon from '../assets/polygon.svg'
 import avax from '../assets/avax.svg'
+import nftCollection from '../assets/contracts/nft-collection.png'
 import fantom from '../assets/fantom.svg'
+import { constants } from 'ethers'
+
+export type SUPPORTED_CHAIN_ID =
+  | ChainId.Mainnet
+  | ChainId.Goerli
+  | ChainId.Mumbai
+  | ChainId.Polygon
+
+export interface DeployableContractsType {
+  name: string
+  type:
+    | 'nft-collection'
+    | 'split'
+    | 'nft-drop'
+    | 'signature-drop'
+    | 'edition-drop'
+    | 'edition'
+    | 'token-drop'
+    | 'token'
+    | 'vote'
+    | 'marketplace'
+    | 'pack'
+    | 'multiwrap'
+  description: string
+  image: string
+}
+
+export const contractTypes = {
+  NFTCollection: 'nft-collection',
+  NFTDrop: 'nft-drop',
+  SignatureDrop: 'signature-drop',
+  EditionDrop: 'edition-drop',
+  Edition: 'edition',
+  Token: 'token',
+  TokenDrop: 'token-drop',
+  Vote: 'vote',
+  Split: 'split',
+  Marketplace: 'marketplace',
+  Pack: 'pack',
+  Multiwrap: 'multiwrap',
+}
+
+export const deployableContractsList: DeployableContractsType[] = [
+  {
+    name: 'NFT Collection',
+    type: 'nft-collection',
+    description: 'Claimable drop of one-of-one NFTs',
+    image: nftCollection.src,
+  },
+]
 
 export const networksList = [
   {
@@ -63,3 +114,34 @@ export const mainnets = networksList.filter((net) => {
 export const testnets = networksList.filter((net) => {
   return net.networkType === 'testnet'
 })
+
+export const alchemyUrlMap: Record<SUPPORTED_CHAIN_ID, string> = {
+  [ChainId.Mainnet]: `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ETHEREUM_MAINNET_KEY}`,
+  [ChainId.Goerli]: `https://eth-goerli.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_GOERLI_KEY}`,
+  [ChainId.Polygon]: `https://polygon-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_POLYGON_MAINNET_KEY}`,
+  [ChainId.Mumbai]: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_MUMBAI_KEY}`,
+}
+
+export const StorageSingleton = new IpfsStorage(
+  process.env.NEXT_PUBLIC_IPFS_GATEWAY_URL,
+)
+
+export const networkKeys = {
+  all: ['network'] as const,
+  chain: (chainId?: SUPPORTED_CHAIN_ID) =>
+    [...networkKeys.all, chainId] as const,
+}
+
+export const contractKeys = {
+  all: ['contract'] as const,
+  lists: () => [...contractKeys.all, 'list'] as const,
+  list: (address = constants.AddressZero) =>
+    [...contractKeys.lists(), address] as const,
+  listWithFilters: (
+    address = constants.AddressZero,
+    filters?: ContractType[],
+  ) => [...contractKeys.list(address), { filters }] as const,
+  details: () => [...contractKeys.all, 'detail'] as const,
+  detail: (address: string = constants.AddressZero) =>
+    [...contractKeys.details(), address] as const,
+}

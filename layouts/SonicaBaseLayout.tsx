@@ -7,9 +7,9 @@ interface SonaicaBaseLayoutProps {
 
 export default function SonicaBaseLayout({ children }: SonaicaBaseLayoutProps) {
   return (
-    <>
+    <div className="max-w-screen max-h-screen">
       <Header />
-      <main className="h-[calc(100vh_-_6rem)] bg-gray300">{children}</main>
-    </>
+      {children}
+    </div>
   )
 }

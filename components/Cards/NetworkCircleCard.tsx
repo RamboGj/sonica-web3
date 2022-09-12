@@ -15,8 +15,8 @@ export default function NetworkCircleCard({
   chainId,
   chainName,
   onClick,
-  selectedChainId,
   chainSymbol,
+  selectedChainId,
 }: NetworkCircleCardProps) {
   return (
     <div className="group w-8">
@@ -26,10 +26,9 @@ export default function NetworkCircleCard({
       <div
         onClick={onClick}
         className={`group w-8 h-8 p-[5px] flex items-center justify-center rounded-full drop-shadow-xl cursor-pointer hover:bg-gray300 transiton duration-500 ${
-          chainId === selectedChainId ? `bg-gray500` : `bg-white`
+          selectedChainId === chainId ? `bg-gray500` : `bg-white`
         }`}
       >
-        {/* <div className="invisible group-hover:visible bg-red-500">ChaindId</div> */}
         <Image src={image} width={20} height={20} alt="" />
       </div>
     </div>

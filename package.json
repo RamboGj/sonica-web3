@@ -22,7 +22,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.34.2",
     "react-hot-toast": "^2.3.0",
-    "react-images-uploading": "^3.1.7"
+    "react-images-uploading": "^3.1.7",
+    "react-query": "^3.39.2"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^1.1.3",

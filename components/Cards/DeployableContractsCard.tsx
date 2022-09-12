@@ -7,7 +7,7 @@ interface DeployableContractsProps {
   onClick: () => void
 }
 
-export default function ContractToDeploy({
+export default function DeployableContractsCard({
   name,
   description,
   image,

@@ -1,24 +1,16 @@
 import { useRouter } from 'next/router'
 import { CaretLeft } from 'phosphor-react'
 import Button from '../../../components/Buttons/Button'
-import nftCollection from '../../../assets/contracts/nft-collection.png'
-import ContractToDeploy from '../../../components/Cards/ContractToDeploy'
+import DeployableContractsCard from '../../../components/Cards/DeployableContractsCard'
 import { useState } from 'react'
 import DeployContractModal from '../../../components/Modals/DeployContractModal'
+import { deployableContractsList } from '../../../utils/constants'
 
 export default function ContractsList() {
   const [isDeployContractModal, setIsDeployContractModal] =
     useState<boolean>(false)
 
   const router = useRouter()
-
-  const deployableContractsList = [
-    {
-      name: 'NFT Collection',
-      description: 'Claimable drop of one-of-one NFTs',
-      image: nftCollection.src,
-    },
-  ]
 
   return (
     <div className="w-screen h-[calc(100vh_-_6rem)] px-12">
@@ -42,7 +34,7 @@ export default function ContractsList() {
           {deployableContractsList.map((contract) => {
             return (
               <>
-                <ContractToDeploy
+                <DeployableContractsCard
                   onClick={() => setIsDeployContractModal(true)}
                   image={contract.image}
                   name={contract.name}
@@ -50,6 +42,7 @@ export default function ContractsList() {
                 />
                 <DeployContractModal
                   contractName={contract.name}
+                  contractType={contract.type}
                   close={() => setIsDeployContractModal(false)}
                   isOpen={isDeployContractModal}
                 />

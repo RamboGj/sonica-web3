@@ -9,9 +9,16 @@ module.exports = {
     extend: {
       colors: {
         danger: '#FC1F08',
+        disabledDanger: '#901306',
+
         attention: '#FF9F1F',
+        disabledAttention: '#B06808',
+
         success: '#05D869',
+        disabledSuccess: '#07944A',
+
         continue: '#2FC5F7',
+        disabledContinue: '#085F92',
 
         purple900: '#480980',
         purple700: '#5A2F80',

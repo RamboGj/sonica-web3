@@ -40,24 +40,26 @@ export default function NetworkContextProvider({
 
   const [, switchNetwork] = useNetwork()
 
-  async function handleSwitchNetwork(chainId: ChainId, chainLogo: string) {
+  async function handleSwitchNetwork(chainId: ChainId, chainLogo?: string) {
     setIsSwitchingNetwork(true)
     if (switchNetwork) {
-      await switchNetwork(chainId)
+      const switchChain = await switchNetwork(chainId)
 
-      setNetworkImage(chainLogo)
-      setIsSwitchNetworkModal(false)
+      if (!switchChain.error) {
+        setNetworkImage(chainLogo || networkImage)
+        setIsSwitchNetworkModal(false)
+      }
       setIsSwitchingNetwork(false)
     }
   }
 
   useEffect(() => {
-    const currentNetwork: NetworkListProps[] = networksList.filter((net) => {
+    const currentImage = networksList.filter((net) => {
       return net.id === activeChainId
     })
 
-    setNetworkImage(currentNetwork[0].logo)
-  }, [activeChainId])
+    setNetworkImage(currentImage[0].logo)
+  }, [])
 
   return (
     <NetworkContext.Provider
