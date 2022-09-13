@@ -1,16 +1,42 @@
-import { ChainId, IpfsStorage, ContractType } from '@thirdweb-dev/sdk'
+import {
+  ChainId,
+  IpfsStorage,
+  ContractType,
+  CommonContractOutputSchema,
+} from '@thirdweb-dev/sdk'
 import ethereum from '../assets/ethereum.svg'
 import polygon from '../assets/polygon.svg'
 import avax from '../assets/avax.svg'
 import nftCollection from '../assets/contracts/nft-collection.png'
 import fantom from '../assets/fantom.svg'
 import { constants } from 'ethers'
+import z from 'zod'
 
 export type SUPPORTED_CHAIN_ID =
   | ChainId.Mainnet
   | ChainId.Goerli
   | ChainId.Mumbai
   | ChainId.Polygon
+
+export interface ContractsDataReturn {
+  address: string
+  contractType:
+    | 'custom'
+    | 'nft-drop'
+    | 'signature-drop'
+    | 'nft-collection'
+    | 'edition-drop'
+    | 'edition'
+    | 'token-drop'
+    | 'token'
+    | 'vote'
+    | 'split'
+    | 'marketplace'
+    | 'pack'
+    | 'multiwrap'
+  metadata: () => Promise<z.output<typeof CommonContractOutputSchema>>
+  chainId: SUPPORTED_CHAIN_ID
+}
 
 export interface DeployableContractsType {
   name: string
@@ -54,6 +80,19 @@ export const deployableContractsList: DeployableContractsType[] = [
     image: nftCollection.src,
   },
 ]
+
+export const CHAINS_IDS_TRANSLATION_FOR_TABLE = {
+  [ChainId.Mainnet]: 'Ethereum',
+  [ChainId.Goerli]: 'Goerli',
+  [ChainId.Polygon]: 'Polygon',
+  [ChainId.Mumbai]: 'Mumbai',
+}
+
+export const CONTRACTS_TYPES_TRANSLATION_FOR_NAME = {
+  [contractTypes.NFTCollection]: 'NFT Collection',
+  [contractTypes.Split]: 'Split',
+  [contractTypes.NFTDrop]: 'NFT Drop',
+}
 
 export const networksList = [
   {

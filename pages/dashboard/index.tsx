@@ -1,7 +1,7 @@
 import { ChainId, useAddress, useDisconnect } from '@thirdweb-dev/react'
 import { useRouter } from 'next/router'
 import { CaretLeft, Plus, Wallet } from 'phosphor-react'
-import { useEffect } from 'react'
+import { useMemo } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Button from '../../components/Buttons/Button'
 import DeployedContractsTable from '../../components/DeployedContractsTable'
@@ -12,17 +12,30 @@ export default function Dashboard() {
   const router = useRouter()
   const address = useAddress()
 
-  const contracts = useContractList(ChainId.Mumbai, address)
+  const mumbaiQuery = useContractList(ChainId.Mumbai, address)
+  const mainnetQuery = useContractList(ChainId.Mainnet, address)
+  const polygonQuery = useContractList(ChainId.Polygon, address)
+  const goerliQuery = useContractList(ChainId.Goerli, address)
 
-  useEffect(() => {
-    console.log('contrats: ', contracts.data)
-  }, [contracts])
+  const combinedList = useMemo(() => {
+    return (
+      mainnetQuery.data?.map((d) => ({ ...d, chainId: ChainId.Mainnet })) || []
+    )
+      .concat(
+        polygonQuery.data?.map((d) => ({
+          ...d,
+          chainId: ChainId.Polygon,
+        })) || [],
+      )
+      .concat(
+        goerliQuery.data?.map((d) => ({ ...d, chainId: ChainId.Goerli })) || [],
+      )
+      .concat(
+        mumbaiQuery.data?.map((d) => ({ ...d, chainId: ChainId.Mumbai })) || [],
+      )
+  }, [mainnetQuery.data, polygonQuery.data, goerliQuery.data, mumbaiQuery.data])
 
-  useEffect(() => {
-    console.log(contracts)
-  }, [])
-
-  if (contracts) {
+  if (combinedList) {
     return (
       <div className="w-screen px-12">
         <div className="pt-5 max-w-[1060px] mx-auto flex justify-between items-center">
@@ -43,8 +56,8 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="max-w-[1060px] mx-auto flex justify-between items-center mt-12">
-          <div className="w-full h-full flex flex-col items-center justify-center bg-white shadow-xl rounded-md mx-auto">
-            <DeployedContractsTable contracts={contracts.data} />
+          <div className="w-full h-full flex flex-col items-center justify-center bg-white shadow-md rounded-b-xl mx-auto mb-12">
+            <DeployedContractsTable combinedContractsList={combinedList} />
           </div>
         </div>
         <Toaster position="top-center" />
@@ -52,7 +65,7 @@ export default function Dashboard() {
     )
   }
 
-  if (!contracts) {
+  if (!combinedList) {
     return (
       <div className="w-screen h-[calc(100vh_-_6rem)] px-12">
         <div className="pt-5 max-w-[1060px] mx-auto">

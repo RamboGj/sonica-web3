@@ -99,7 +99,7 @@ export default function WalletConnector() {
 
   if (address) {
     return (
-      <div className="flex rounded-md text-md shadow-xl bg-white items-center justify-center transition duration-500 w-full max-w-[280px] max-h-12 focus:outline-none hover:bg-gray-300 z-10">
+      <div className="flex rounded-md text-md shadow-xl bg-white items-center justify-center transition duration-500 w-full max-w-[240px] max-h-12 focus:outline-none hover:bg-gray-300 z-10">
         <Menu as="div" className="w-full">
           <div>
             <Menu.Button
@@ -108,12 +108,12 @@ export default function WalletConnector() {
             >
               <div className="flex items-center gap-x-4">
                 <Image width={28} height={28} src={networkImage} alt="" />
-                <div className="flex flex-col items-start leading-none">
-                  <p className="font-bold">
+                <div className="flex flex-col items-start">
+                  <p className="font-bold text-sm leading-none">
                     {balance.data?.displayValue.substring(0, 8)} {''}{' '}
                     {networkData.data.chain?.nativeCurrency?.symbol}
                   </p>
-                  <p className="font-medium text-gray700">
+                  <p className="font-medium text-gray700 text-sm leading-none">
                     {address.substring(0, 4) +
                       '...' +
                       address.substring(
@@ -141,7 +141,7 @@ export default function WalletConnector() {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute mt-2 shadow-xl w-[280px] origin-top-right divide-y divide-gray-100 rounded-md bg-white">
+            <Menu.Items className="absolute mt-2 shadow-xl w-full max-w-[240px] origin-top-right divide-y divide-gray-100 rounded-md bg-white">
               <div>
                 {dropdownOptions.map((option) => {
                   return (
@@ -179,12 +179,12 @@ export default function WalletConnector() {
           <Menu.Button
             onClick={handleActiveDropdown}
             disabled={isAuthenticating}
-            className="flex rounded-md w-full py-2 px-3 h-12 items-center justify-center hover:bg-gray-300 transition duration-500 gap-2"
+            className="flex rounded-md w-full py-2 px-1 h-12 items-center justify-center hover:bg-gray-300 transition duration-500 gap-2"
           >
             {isAuthenticating ? (
               <CircleNotch size={24} className="animate-spin" />
             ) : (
-              <div className="flex w-full justify-center space-x-4 items-center">
+              <div className="flex w-fit justify-center space-x-4 items-center text-sm">
                 <span>Connect Wallet</span>
                 <CaretDown
                   size={24}
