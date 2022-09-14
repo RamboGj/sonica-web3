@@ -21,7 +21,7 @@ export default function ContractPage() {
             <div>
               <div>
                 <h1>NFT Test</h1>
-                <button>Address</button>
+                <button>{contract}</button>
                 <button>Iframe</button>
                 <GearSix size={32} />
               </div>
