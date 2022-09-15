@@ -1,9 +1,9 @@
 import {
   ChainId,
-  IpfsStorage,
   ContractType,
   CommonContractOutputSchema,
 } from '@thirdweb-dev/sdk'
+import { IpfsStorage } from '@thirdweb-dev/storage'
 import ethereum from '../assets/ethereum.svg'
 import polygon from '../assets/polygon.svg'
 import avax from '../assets/avax.svg'
@@ -11,6 +11,21 @@ import nftCollection from '../assets/contracts/nft-collection.png'
 import fantom from '../assets/fantom.svg'
 import { constants } from 'ethers'
 import z from 'zod'
+
+export type SUPPORTED_CONTRACT_TYPES =
+  | 'custom'
+  | 'nft-drop'
+  | 'signature-drop'
+  | 'nft-collection'
+  | 'edition-drop'
+  | 'edition'
+  | 'token-drop'
+  | 'token'
+  | 'vote'
+  | 'split'
+  | 'marketplace'
+  | 'pack'
+  | 'multiwrap'
 
 export type SUPPORTED_CHAIN_ID =
   | ChainId.Mainnet
@@ -55,6 +70,13 @@ export interface DeployableContractsType {
     | 'multiwrap'
   description: string
   image: string
+}
+
+export const CHAIN_TRANSLATION_FOR_ROUTER = {
+  [ChainId.Goerli]: 'goerli',
+  [ChainId.Mumbai]: 'mumbai',
+  [ChainId.Polygon]: 'polygon',
+  [ChainId.Mainnet]: 'ethereum',
 }
 
 export const contractTypes = {

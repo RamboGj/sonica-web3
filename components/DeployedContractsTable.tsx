@@ -3,13 +3,16 @@ import { ChainId, CommonContractOutputSchema } from '@thirdweb-dev/sdk'
 import { z } from 'zod'
 import logo from '../assets/contracts/nft-collection.png'
 import { CopySimple, Trash } from 'phosphor-react'
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import Link from 'next/link'
 import {
   CHAINS_IDS_TRANSLATION_FOR_TABLE,
+  CHAIN_TRANSLATION_FOR_ROUTER,
   CONTRACTS_TYPES_TRANSLATION_FOR_NAME,
   SUPPORTED_CHAIN_ID,
 } from '../utils/constants'
+import { copyAddress } from '../utils/functions'
+import { useRouter } from 'next/router'
 
 interface ContractProps {
   address: string
@@ -38,9 +41,17 @@ interface DeployedContractsTableProps {
 export default function DeployedContractsTable({
   combinedContractsList,
 }: DeployedContractsTableProps) {
-  async function copyAddress(address: string) {
-    await navigator.clipboard.writeText(address)
-    toast.success('Contract address successfully copied!')
+  const { pathname } = useRouter()
+  console.log(pathname)
+
+  const tableData = {
+    Header: [
+      { name: 'Name', span: '3' },
+      { name: 'Contract Type', span: '2' },
+      { name: 'Network', span: '2' },
+      { name: 'Address', span: '2' },
+      { name: '', span: '1' },
+    ],
   }
 
   return (
@@ -51,12 +62,17 @@ export default function DeployedContractsTable({
       ></div>
       <table className="w-full">
         <thead className="w-full bg-gray300">
-          <tr className="w-full grid grid-cols-10 pt-3 pb-4 px-12 font-thin">
-            <th className="col-span-3 font-thin text-start">Name</th>
-            <th className="col-span-2 font-thin text-start">Contract Type</th>
-            <th className="col-span-2 font-thin text-start">Network</th>
-            <th className="col-span-2 font-thin text-start">Address</th>
-            <th className="col-span-1"></th>
+          <tr className="grid grid-cols-10 pt-3 pb-4 px-12">
+            {tableData.Header.map((head) => {
+              return (
+                <th
+                  key={head.name}
+                  className={`col-span-${head.span} font-thin text-start`}
+                >
+                  {head.name}
+                </th>
+              )
+            })}
           </tr>
         </thead>
         <tbody className="w-full divide-y-2 divide-gray300 rounded-xl">
@@ -67,14 +83,18 @@ export default function DeployedContractsTable({
               return (
                 <Link
                   key={contract.address}
-                  href={`/dashboard/${contract.address}`}
+                  href={`/dashboard/${
+                    CHAIN_TRANSLATION_FOR_ROUTER[
+                      contract.chainId as SUPPORTED_CHAIN_ID
+                    ]
+                  }/${contract.address}`}
                 >
                   <a>
                     <tr className="w-full grid grid-cols-10 text-sm py-2 px-12 text-thin font-thin hover:bg-gray300 hover:bg-opacity-75 hover:cursor-pointer transition duration-500 rounded-md">
                       <td className="col-span-3 my-auto text-purple300 font-medium hover:underline transtion duration-300">
                         {' '}
                         {contractName.length > 30
-                          ? contractName.slice(0, 27) + '...'
+                          ? contractName.toString().slice(0, 27) + '...'
                           : contractName}
                       </td>
                       <td className="col-span-2 my-auto">
@@ -106,7 +126,7 @@ export default function DeployedContractsTable({
                         </div>
                       </td>
                       <td className="col-span-2 my-auto">
-                        <div
+                        <button
                           onClick={async (e) => {
                             await e.preventDefault()
                             copyAddress(contract.address)
@@ -120,7 +140,7 @@ export default function DeployedContractsTable({
                               contract.address.length - 4,
                               contract.address.length,
                             )}
-                        </div>
+                        </button>
                       </td>
                       <td className="col-span-1 my-auto w-full ">
                         <Trash

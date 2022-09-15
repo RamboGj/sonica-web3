@@ -37,7 +37,7 @@ export default function Dashboard() {
 
   if (combinedList) {
     return (
-      <div className="w-screen px-12">
+      <>
         <div className="pt-5 max-w-[1060px] mx-auto flex justify-between items-center">
           <div>
             <Button
@@ -61,13 +61,13 @@ export default function Dashboard() {
           </div>
         </div>
         <Toaster position="top-center" />
-      </div>
+      </>
     )
   }
 
   if (!combinedList) {
     return (
-      <div className="w-screen h-[calc(100vh_-_6rem)] px-12">
+      <>
         <div className="pt-5 max-w-[1060px] mx-auto">
           <Button
             label="Back"
@@ -97,7 +97,7 @@ export default function Dashboard() {
           </div>
         </div>
         <Toaster position="top-center" />
-      </div>
+      </>
     )
   }
 }

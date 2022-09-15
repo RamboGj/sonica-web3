@@ -79,7 +79,7 @@ export default function Button({
             : type === 'continue'
             ? `${styles.continue}`
             : `${styles.default}`
-        } w-[135px] rounded-md py-3 h-12 font-medium text-white text-button transition duration-500 shadow-xl`}
+        } w-[135px] rounded-md py-3 px-4 h-12 font-medium text-white text-button transition duration-500 shadow-xl`}
       >
         {hasIcon ? (
           <div className="flex items-center gap-x-3 justify-center">

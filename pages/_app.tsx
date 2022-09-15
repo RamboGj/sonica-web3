@@ -15,8 +15,6 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 const queryClient = new QueryClient()
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { pathname } = useRouter()
-
   const connectors: WalletConnector[] = [
     'metamask',
     'walletConnect',
@@ -24,38 +22,26 @@ function MyApp({ Component, pageProps }: AppProps) {
     'gnosis',
   ]
 
-  // const magicConnect: MagicConnectorType = {
-  //   name: 'magic',
-  //   options: {
-  //     apiKey: process.env.NEXT_PUBLIC_API_KEY_MAGIC_LINK
-  //       ? process.env.NEXT_PUBLIC_API_KEY_MAGIC_LINK
-  //       : '',
-  //     rpcUrls: '',
-  //   },
-  // }
+  const router = useRouter()
 
-  // if (process.env.NEXT_PUBLIC_API_KEY_MAGIC_LINK) {
-  //   connectors.push(magicConnect)
-  // }
-
-  // const chains = [
-  //   ChainId.Fantom,
-  //   ChainId.Goerli,
-  //   ChainId.Avalanche,
-  //   ChainId.Mumbai,
-  //   ChainId.Polygon,
-  //   ChainId.Mainnet,
-  // ]
+  const { chain } = router.query
 
   return (
-    // <ThirdwebProviderChains>
     <ThirdwebProvider
       walletConnectors={connectors}
-      desiredChainId={ChainId.Goerli}
+      desiredChainId={
+        chain === 'goerli'
+          ? ChainId.Goerli
+          : chain === 'polygon'
+          ? ChainId.Polygon
+          : chain === 'ethereum'
+          ? ChainId.Mainnet
+          : ChainId.Mumbai
+      }
     >
       <QueryClientProvider client={queryClient}>
         <NetworkContextProvider>
-          {pathname !== '/designsystem' ? (
+          {router.pathname !== '/designsystem' ? (
             <SonicaBaseLayout>
               <Component {...pageProps} />
             </SonicaBaseLayout>
@@ -65,7 +51,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         </NetworkContextProvider>
       </QueryClientProvider>
     </ThirdwebProvider>
-    // </ThirdwebProviderChains>
   )
 }
 
