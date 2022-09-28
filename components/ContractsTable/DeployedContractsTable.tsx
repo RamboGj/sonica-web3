@@ -75,11 +75,11 @@ export default function DeployedContractsTableComponent({
                 <>
                   <Link
                     key={contract.address}
-                    href={`/dashboard/${
-                      CHAINS_IDS_TRANSLATION[
-                        contract.chainId as unknown as SUPPORTED_CHAIN_ID
-                      ]
-                    }/${contract.address}/${contract.contractType}`}
+                    href={`/dashboard/${CHAINS_IDS_TRANSLATION[
+                      contract.chainId as unknown as SUPPORTED_CHAIN_ID
+                    ].toLowerCase()}/${contract.address}/${
+                      contract.contractType
+                    }`}
                   >
                     <a>
                       <tr className="w-full grid grid-cols-10 text-sm py-2 px-12 text-thin font-thin hover:bg-gray300 hover:bg-opacity-75 hover:cursor-pointer transition duration-500 rounded-md">
