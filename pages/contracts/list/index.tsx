@@ -3,8 +3,12 @@ import { CaretLeft } from 'phosphor-react'
 import Button from '../../../components/Buttons/Button'
 import DeployableContractsCard from '../../../components/Cards/DeployableContractsCard'
 import { useState } from 'react'
-import DeployContractModal from '../../../components/Modals/DeployContractModal'
 import { deployableContractsList } from '../../../utils/constants'
+import dynamic from 'next/dynamic'
+
+const DeployContractModal = dynamic(
+  () => import('../../../components/Modals/DeployContractModal'),
+)
 
 export default function ContractsList() {
   const [isDeployContractModal, setIsDeployContractModal] =

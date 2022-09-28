@@ -7,7 +7,7 @@ import Image from 'next/image'
 import Button from '../Buttons/Button'
 import { ApexOptions } from 'apexcharts'
 import dynamic from 'next/dynamic'
-import { mainnets, testnets } from '../../utils/constants'
+import { mainnets, SUPPORTED_CHAIN_ID, testnets } from '../../utils/network'
 import NetworkCircleCard from '../Cards/NetworkCircleCard'
 import ImageUploading, {
   ImageListType,
@@ -378,9 +378,11 @@ export default function DeployContractModal({
                                         mainnet.logo,
                                       )
                                     }
-                                    selectedChainId={selectedChainId}
+                                    selectedChainId={
+                                      selectedChainId as SUPPORTED_CHAIN_ID
+                                    }
                                     chainSymbol={mainnet.symbol}
-                                    chainId={mainnet.id}
+                                    chainId={mainnet.id as SUPPORTED_CHAIN_ID}
                                     chainName={mainnet.name}
                                     image={mainnet.logo}
                                   />
@@ -401,8 +403,10 @@ export default function DeployContractModal({
                                         testnet.logo,
                                       )
                                     }
-                                    chainId={testnet.id}
-                                    selectedChainId={selectedChainId}
+                                    chainId={testnet.id as SUPPORTED_CHAIN_ID}
+                                    selectedChainId={
+                                      selectedChainId as SUPPORTED_CHAIN_ID
+                                    }
                                     chainSymbol={testnet.symbol}
                                     chainName={testnet.name}
                                     image={testnet.logo}

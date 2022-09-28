@@ -1,31 +1,26 @@
 import { useRouter } from 'next/router'
 import { CaretLeft, CircleNotch, Code, CopySimple, Gear } from 'phosphor-react'
-import Button from '../../../components/Buttons/Button'
+import Button from '../../../../../../components/Buttons/Button'
 import Image from 'next/image'
-import { copyAddress } from '../../../utils/functions'
+import { copyAddress } from '../../../../../../utils/functions'
 import { Toaster } from 'react-hot-toast'
-import DropdownButton from '../../../components/Buttons/DropdownButton'
+import DropdownButton from '../../../../../../components/Buttons/DropdownButton'
 import { useContract, useContractMetadata } from '@thirdweb-dev/react'
 
-export default function ContractPage() {
+export interface PageProps {
+  address: string
+}
+
+export default function NFTCollectionPage({ address }: PageProps) {
   const router = useRouter()
 
-  const { address, chain } = router.query
-
-  console.log(address?.valueOf)
-
   const { contract } = useContract(address?.toString())
-  const { data } = useContractMetadata(contract?.getAddress())
-
-  const { pathname } = useRouter()
-  console.log('pathname: ', pathname)
-
-  console.log(typeof chain)
+  const { data: metadata } = useContractMetadata(contract?.getAddress())
 
   return (
     <div className="w-screen h-full mt-5">
       <div className="max-w-[1060px] h-full w-full mx-auto">
-        {data ? (
+        {metadata ? (
           <>
             <Button
               action={() => {
@@ -42,14 +37,14 @@ export default function ContractPage() {
                   <Image
                     width={150}
                     height={150}
-                    src={data?.image}
+                    src={metadata?.image}
                     alt=""
                     className="rounded-[4px]"
                   />
                 </div>
                 <div className="flex flex-col gap-y-1 w-full">
                   <div className="flex gap-x-5 items-center justify-between">
-                    <h1 className="text-title1">{data?.name}</h1>
+                    <h1 className="text-title1">{metadata?.name}</h1>
                     <div className="flex gap-x-5 flex-1 justify-end">
                       <button
                         onClick={async (e) => {
@@ -75,7 +70,7 @@ export default function ContractPage() {
                   </div>
                   <div className="flex justify-between">
                     <p className="break-words text-sm max-w-md">
-                      {data?.description}
+                      {metadata?.description}
                     </p>
                     <DropdownButton />
                   </div>

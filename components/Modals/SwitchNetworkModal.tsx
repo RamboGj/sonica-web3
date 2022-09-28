@@ -3,6 +3,7 @@ import { CircleNotch, X } from 'phosphor-react'
 import { Fragment } from 'react'
 import { useNetworkContext } from '../../contexts/NetworkContext'
 import NetworkCard from '../Cards/NetworkCard'
+import { mainnets, testnets } from '../../utils/network'
 
 interface SwitchNetworkModalProps {
   isOpen: boolean
@@ -13,16 +14,7 @@ export default function SwitchNetworkModal({
   isOpen,
   close,
 }: SwitchNetworkModalProps) {
-  const { networksList, handleSwitchNetwork, isSwitchingNetwork } =
-    useNetworkContext()
-
-  const mainnets = networksList.filter((net) => {
-    return net.networkType === 'mainnet'
-  })
-
-  const testnets = networksList.filter((net) => {
-    return net.networkType === 'testnet'
-  })
+  const { handleSwitchNetwork, isSwitchingNetwork } = useNetworkContext()
 
   return (
     <>

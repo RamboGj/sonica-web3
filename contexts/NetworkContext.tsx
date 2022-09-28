@@ -1,22 +1,13 @@
 import { ChainId } from '@thirdweb-dev/sdk'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useActiveChainId, useNetwork } from '@thirdweb-dev/react'
-import { networksList } from '../utils/constants'
-
-interface NetworkListProps {
-  name: string
-  id: ChainId
-  logo: string
-  symbol: string
-  networkType: string
-}
+import { switchableNetworksList } from '../utils/network'
 
 interface NetworkContextProviderProps {
   children: React.ReactNode
 }
 
 interface NetworkContextProps {
-  networksList: NetworkListProps[]
   handleSwitchNetwork: (chainId: number, chainLogo: string) => void
   isSwitchingNetwork: boolean
   setIsSwitchingNetwork: (isSwitchingNetwork: boolean) => void
@@ -54,7 +45,7 @@ export default function NetworkContextProvider({
   }
 
   useEffect(() => {
-    const currentImage = networksList.filter((net) => {
+    const currentImage = switchableNetworksList.filter((net) => {
       return net.id === activeChainId
     })
 
@@ -64,7 +55,6 @@ export default function NetworkContextProvider({
   return (
     <NetworkContext.Provider
       value={{
-        networksList,
         handleSwitchNetwork,
         isSwitchingNetwork,
         setIsSwitchingNetwork,

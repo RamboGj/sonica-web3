@@ -16,12 +16,12 @@ export default function DeployableContractsCard({
   return (
     <div
       onClick={onClick}
-      className="w-[315px] flex items-center gap-x-5 py-3 px-4 bg-white shadow-xl rounded-lg border border-purple300 hover:scale-105 hover:cursor-pointer hover:bg-purple-200 transition duration-500"
+      className="w-[315px] flex items-center gap-5 py-3 px-4 bg-white shadow-xl rounded-lg border border-purple300 hover:scale-105 hover:cursor-pointer hover:bg-purple-200 transition duration-500"
     >
-      <div>
-        <Image src={image} width={120} height={150} alt="" />
+      <div className="w-24">
+        <Image src={image} width={82} height={102} alt="" className="w-auto" />
       </div>
-      <div>
+      <div className="flex flex-col flex-1">
         <h1 className="uppercase">{name}</h1>
         <p>{description}</p>
       </div>

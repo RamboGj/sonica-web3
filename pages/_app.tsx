@@ -2,13 +2,7 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import SonicaBaseLayout from '../layouts/SonicaBaseLayout'
 import { useRouter } from 'next/router'
-// import ThirdwebProviderChains from '../layouts/ThirdwebProviderChains'
-import {
-  ChainId,
-  // MagicConnectorType,
-  ThirdwebProvider,
-  WalletConnector,
-} from '@thirdweb-dev/react'
+import { ChainId, ThirdwebProvider, WalletConnector } from '@thirdweb-dev/react'
 import NetworkContextProvider from '../contexts/NetworkContext'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
@@ -24,17 +18,17 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const router = useRouter()
 
-  const { chain } = router.query
+  const { network } = router.query
 
   return (
     <ThirdwebProvider
       walletConnectors={connectors}
       desiredChainId={
-        chain === 'goerli'
+        network === 'goerli'
           ? ChainId.Goerli
-          : chain === 'polygon'
+          : network === 'polygon'
           ? ChainId.Polygon
-          : chain === 'ethereum'
+          : network === 'ethereum'
           ? ChainId.Mainnet
           : ChainId.Mumbai
       }

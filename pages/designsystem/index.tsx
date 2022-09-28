@@ -7,7 +7,7 @@ import { CaretDown, CaretRight, RocketLaunch, Wallet, X } from 'phosphor-react'
 
 export default function DesignSystem() {
   return (
-    <div className="max-w-screen overflow-scroll overscroll-x-auto">
+    <>
       <header className="flex px-12 md:px-48 justify-center md:justify-between items-center h-[150px] bg-white">
         <Image src={logoSonica} width={300} height={150} alt="Logo da Sonica" />
 
@@ -312,6 +312,6 @@ export default function DesignSystem() {
           </div>
         </div>
       </main>
-    </div>
+    </>
   )
 }

@@ -1,12 +1,13 @@
 import { ChainId } from '@thirdweb-dev/sdk'
 import Image from 'next/image'
+import { SUPPORTED_CHAIN_ID } from '../../utils/network'
 
 interface NetworkCircleCardProps {
   image: string
-  chainId: ChainId
+  chainId: ChainId | SUPPORTED_CHAIN_ID
   chainName: string
   chainSymbol: string
-  selectedChainId: ChainId
+  selectedChainId: ChainId | SUPPORTED_CHAIN_ID
   onClick: () => void
 }
 

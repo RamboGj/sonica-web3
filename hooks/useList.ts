@@ -5,7 +5,7 @@ import {
   SUPPORTED_CHAIN_ID,
   networkKeys,
   contractKeys,
-} from '../utils/constants'
+} from '../utils/network'
 import { useQuery } from 'react-query'
 
 export function useContractList(
